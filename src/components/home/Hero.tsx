@@ -1,4 +1,4 @@
-import { Box, Button, Container, Flex, Heading, Text, useColorModeValue, Icon, Stack } from '@chakra-ui/react'
+import { Box, Button, Container, Flex, Heading, Text, useColorModeValue, Icon, Stack, Image } from '@chakra-ui/react'
 import { FaChartLine, FaSearch } from 'react-icons/fa'
 import NextLink from 'next/link'
 
@@ -27,10 +27,11 @@ export function Hero() {
           right="0"
           bottom="0"
           zIndex="0"
-          opacity="0.05"
+          opacity="0.15"
           pointerEvents="none"
-          backgroundImage="linear-gradient(rgba(0, 255, 255, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 255, 255, 0.1) 1px, transparent 1px)"
-          backgroundSize="40px 40px"
+          backgroundImage="url('/images/hero-background.svg')"
+          backgroundSize="cover"
+          backgroundPosition="center"
         />
       )}
       
@@ -105,9 +106,8 @@ export function Hero() {
             boxShadow={isDark ? "0 0 30px rgba(0, 255, 255, 0.1)" : "xl"}
             border={isDark ? "1px solid rgba(0, 255, 255, 0.1)" : "none"}
           >
-            {/* Placeholder para uma imagem ou visualização de dados */}
+            {/* Visualização de dados interativa usando a imagem SVG */}
             <Box 
-              bg={isDark ? "rgba(0, 0, 0, 0.3)" : "gray.100"} 
               position="absolute"
               top={0}
               left={0}
@@ -116,8 +116,23 @@ export function Hero() {
               display="flex"
               alignItems="center"
               justifyContent="center"
+              bg={isDark ? "rgba(0, 0, 0, 0.3)" : "gray.100"}
             >
-              <Text color={isDark ? "cyberpunk.accent" : "gray.500"}>
+              <Image
+                src="/images/data-visualization.svg"
+                alt="Visualização de dados interativa"
+                width="100%"
+                height="100%"
+                objectFit="cover"
+                opacity={isDark ? 0.9 : 0.8}
+              />
+              <Text 
+                position="absolute" 
+                color={isDark ? "cyberpunk.accent" : "gray.500"}
+                fontWeight="medium"
+                textAlign="center"
+                px={4}
+              >
                 Visualização de dados interativa
               </Text>
             </Box>

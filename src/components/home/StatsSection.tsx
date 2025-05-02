@@ -1,14 +1,14 @@
-import { Box, Container, Flex, Heading, SimpleGrid, Stat, StatLabel, StatNumber, Text, useColorModeValue, Icon } from '@chakra-ui/react'
+import { Box, Container, Flex, Heading, SimpleGrid, Stat, StatLabel, StatNumber, StatHelpText, Icon, Text, useColorModeValue, Image } from '@chakra-ui/react'
 import { FaUsers, FaVoteYea, FaFileAlt, FaMoneyBillWave } from 'react-icons/fa'
 
 export function StatsSection() {
-  const bgColor = useColorModeValue('white', 'rgba(10, 25, 41, 0.7)')
-  const borderColor = useColorModeValue('gray.200', 'rgba(0, 255, 255, 0.1)')
-  const statBg = useColorModeValue('gray.50', 'rgba(0, 0, 0, 0.2)')
+  const bgColor = useColorModeValue('gray.50', 'rgba(10, 25, 41, 0.7)')
+  const cardBg = useColorModeValue('white', 'rgba(0, 0, 0, 0.2)')
+  const borderColor = useColorModeValue('gray.200', 'rgba(0, 255, 255, 0.15)')
   const isDark = useColorModeValue(false, true)
-  const iconColor = useColorModeValue('primary.500', 'cyberpunk.accent')
-  const labelColor = useColorModeValue('gray.600', 'gray.400')
-  const numberColor = useColorModeValue('gray.800', 'cyberpunk.text')
+  const headingColor = useColorModeValue('gray.800', 'cyberpunk.text')
+  const textColor = useColorModeValue('gray.600', 'gray.400')
+  const accentColor = useColorModeValue('primary.500', 'cyberpunk.accent')
 
   const stats = [
     { 
@@ -41,12 +41,26 @@ export function StatsSection() {
     <Box 
       py={16} 
       bg={bgColor}
-      borderTop="1px"
-      borderBottom="1px"
-      borderColor={borderColor}
       position="relative"
+      overflow="hidden"
     >
-      <Container maxW="container.xl">
+      {/* Mapa de fundo para o modo escuro */}
+      {isDark && (
+        <Box
+          position="absolute"
+          top="0"
+          left="0"
+          right="0"
+          bottom="0"
+          opacity="0.1"
+          pointerEvents="none"
+          backgroundImage="url('/images/politicians-map.svg')"
+          backgroundSize="cover"
+          backgroundPosition="center"
+        />
+      )}
+      
+      <Container maxW="container.xl" position="relative" zIndex="1">
         <Flex 
           direction="column" 
           align="center" 
@@ -59,18 +73,17 @@ export function StatsSection() {
             mb={4}
             bgGradient={isDark ? "linear(to-r, primary.400, cyberpunk.accent)" : undefined}
             bgClip={isDark ? "text" : undefined}
-            color={isDark ? "transparent" : "gray.800"}
+            color={isDark ? "transparent" : headingColor}
           >
             Transparência em Números
           </Heading>
           <Text 
             fontSize="lg" 
-            color={labelColor}
+            color={textColor}
             textAlign="center"
             maxW="container.md"
           >
-            Acompanhamos e analisamos dados de todos os representantes políticos para 
-            facilitar o controle social e a participação cidadã.
+            Acompanhamos e analisamos dados de todos os representantes políticos para facilitar o controle social e a participação cidadã.
           </Text>
         </Flex>
         
@@ -78,7 +91,7 @@ export function StatsSection() {
           {stats.map((stat, index) => (
             <Box 
               key={index}
-              bg={statBg}
+              bg={cardBg}
               p={6}
               borderRadius="lg"
               borderWidth="1px"
@@ -89,29 +102,46 @@ export function StatsSection() {
                 transform: "translateY(-5px)",
                 boxShadow: isDark ? "0 8px 30px rgba(0, 255, 255, 0.1)" : "md"
               }}
+              position="relative"
             >
-              <Flex mb={4} align="center">
-                <Icon 
-                  as={stat.icon} 
-                  boxSize={10} 
-                  color={iconColor} 
-                  mr={3}
-                  opacity={0.9}
+              {/* Borda superior com efeito de gradiente no modo escuro */}
+              {isDark && (
+                <Box 
+                  position="absolute"
+                  top="0"
+                  left="0"
+                  right="0"
+                  height="2px"
+                  bgGradient="linear(to-r, transparent, cyberpunk.accent, transparent)"
                 />
-                <Stat>
-                  <StatLabel fontSize="md" color={labelColor}>{stat.label}</StatLabel>
-                  <StatNumber 
-                    fontSize="3xl" 
-                    fontWeight="bold" 
-                    color={numberColor}
-                    bgGradient={isDark ? "linear(to-r, primary.400, cyberpunk.accent)" : undefined}
-                    bgClip={isDark ? "text" : undefined}
-                  >
-                    {stat.value}
-                  </StatNumber>
-                </Stat>
+              )}
+              
+              <Flex mb={4} align="center">
+                <Box
+                  borderRadius="full"
+                  bg={isDark ? "rgba(0, 255, 255, 0.1)" : "primary.50"}
+                  p={3}
+                  mr={4}
+                >
+                  <Icon 
+                    as={stat.icon} 
+                    boxSize={6} 
+                    color={accentColor} 
+                  />
+                </Box>
+                <Heading as="h3" size="md" color={headingColor}>
+                  {stat.label}
+                </Heading>
               </Flex>
-              <Text fontSize="sm" color={labelColor}>{stat.description}</Text>
+              
+              <Stat>
+                <StatNumber fontSize="3xl" fontWeight="bold" color={accentColor}>
+                  {stat.value}
+                </StatNumber>
+                <StatHelpText color={textColor}>
+                  {stat.description}
+                </StatHelpText>
+              </Stat>
             </Box>
           ))}
         </SimpleGrid>

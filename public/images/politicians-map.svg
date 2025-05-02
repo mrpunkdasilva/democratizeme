@@ -1,0 +1,80 @@
+<svg width="800" height="600" viewBox="0 0 800 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Fundo com gradiente sutil -->
+  <rect width="800" height="600" fill="#0A1929" opacity="0.9"/>
+  
+  <!-- Mapa do Brasil siimplificado -->
+  <g opacity="0.3">
+    <!-- Contorno do Brasil simplificado -->
+    <path d="M400,100 C500,120 600,200 650,300 C700,400 650,500 550,550 C450,600 350,580 250,550 C150,520 100,450 150,350 C200,250 300,150 400,100 Z" 
+          stroke="#2196F3" 
+          stroke-width="2" 
+          fill="none"/>
+    
+    <!-- Linhas de divisão de regiões -->
+    <path d="M400,100 C350,250 300,400 250,550" stroke="#2196F3" stroke-width="1" opacity="0.5" stroke-dasharray="5 5"/>
+    <path d="M400,100 C450,250 500,400 550,550" stroke="#2196F3" stroke-width="1" opacity="0.5" stroke-dasharray="5 5"/>
+    <path d="M150,350 C300,350 450,350 650,300" stroke="#2196F3" stroke-width="1" opacity="0.5" stroke-dasharray="5 5"/>
+  </g>
+  
+  <!-- Pontos representando concentração de políticos -->
+  <!-- Norte -->
+  <circle cx="350" cy="150" r="15" fill="#00FFFF" opacity="0.2"/>
+  <circle cx="350" cy="150" r="8" fill="#00FFFF" opacity="0.4"/>
+  <text x="370" y="145" font-family="monospace" font-size="12" fill="#FFFFFF" opacity="0.7">Norte</text>
+  <text x="370" y="160" font-family="monospace" font-size="10" fill="#FFFFFF" opacity="0.5">42 políticos</text>
+  
+  <!-- Nordeste -->
+  <circle cx="500" cy="200" r="20" fill="#00FFFF" opacity="0.2"/>
+  <circle cx="500" cy="200" r="12" fill="#00FFFF" opacity="0.4"/>
+  <text x="525" y="195" font-family="monospace" font-size="12" fill="#FFFFFF" opacity="0.7">Nordeste</text>
+  <text x="525" y="210" font-family="monospace" font-size="10" fill="#FFFFFF" opacity="0.5">151 políticos</text>
+  
+  <!-- Centro-Oeste -->
+  <circle cx="350" cy="300" r="18" fill="#00FFFF" opacity="0.2"/>
+  <circle cx="350" cy="300" r="10" fill="#00FFFF" opacity="0.4"/>
+  <text x="375" y="295" font-family="monospace" font-size="12" fill="#FFFFFF" opacity="0.7">Centro-Oeste</text>
+  <text x="375" y="310" font-family="monospace" font-size="10" fill="#FFFFFF" opacity="0.5">87 políticos</text>
+  
+  <!-- Sudeste -->
+  <circle cx="450" cy="400" r="25" fill="#00FFFF" opacity="0.2"/>
+  <circle cx="450" cy="400" r="15" fill="#00FFFF" opacity="0.4"/>
+  <text x="480" y="395" font-family="monospace" font-size="12" fill="#FFFFFF" opacity="0.7">Sudeste</text>
+  <text x="480" y="410" font-family="monospace" font-size="10" fill="#FFFFFF" opacity="0.5">214 políticos</text>
+  
+  <!-- Sul -->
+  <circle cx="350" cy="500" r="17" fill="#00FFFF" opacity="0.2"/>
+  <circle cx="350" cy="500" r="9" fill="#00FFFF" opacity="0.4"/>
+  <text x="375" y="495" font-family="monospace" font-size="12" fill="#FFFFFF" opacity="0.7">Sul</text>
+  <text x="375" y="510" font-family="monospace" font-size="10" fill="#FFFFFF" opacity="0.5">77 políticos</text>
+  
+  <!-- Linhas de conexão entre regiões -->
+  <path d="M350 150 L500 200" stroke="#00FFFF" stroke-width="1" opacity="0.2" stroke-dasharray="5 5"/>
+  <path d="M500 200 L350 300" stroke="#00FFFF" stroke-width="1" opacity="0.2" stroke-dasharray="5 5"/>
+  <path d="M350 300 L450 400" stroke="#00FFFF" stroke-width="1" opacity="0.2" stroke-dasharray="5 5"/>
+  <path d="M450 400 L350 500" stroke="#00FFFF" stroke-width="1" opacity="0.2" stroke-dasharray="5 5"/>
+  
+  <!-- Legenda -->
+  <rect x="50" y="50" width="250" height="140" rx="5" fill="#0A1929" stroke="#2196F3" stroke-width="1" opacity="0.7"/>
+  <text x="70" y="80" font-family="monospace" font-size="14" fill="#FFFFFF" opacity="0.9">Distribuição de Políticos</text>
+  <circle cx="80" cy="110" r="10" fill="#00FFFF" opacity="0.2"/>
+  <circle cx="80" cy="110" r="5" fill="#00FFFF" opacity="0.4"/>
+  <text x="100" y="115" font-family="monospace" font-size="12" fill="#FFFFFF" opacity="0.7">Concentração por região</text>
+  <text x="70" y="140" font-family="monospace" font-size="10" fill="#FFFFFF" opacity="0.5">Total: 571 políticos monitorados</text>
+  
+  <!-- Grade de fundo sutil -->
+  <g opacity="0.05">
+    <path d="M0 100 H800" stroke="#FFFFFF" stroke-width="1"/>
+    <path d="M0 200 H800" stroke="#FFFFFF" stroke-width="1"/>
+    <path d="M0 300 H800" stroke="#FFFFFF" stroke-width="1"/>
+    <path d="M0 400 H800" stroke="#FFFFFF" stroke-width="1"/>
+    <path d="M0 500 H800" stroke="#FFFFFF" stroke-width="1"/>
+    
+    <path d="M100 0 V600" stroke="#FFFFFF" stroke-width="1"/>
+    <path d="M200 0 V600" stroke="#FFFFFF" stroke-width="1"/>
+    <path d="M300 0 V600" stroke="#FFFFFF" stroke-width="1"/>
+    <path d="M400 0 V600" stroke="#FFFFFF" stroke-width="1"/>
+    <path d="M500 0 V600" stroke="#FFFFFF" stroke-width="1"/>
+    <path d="M600 0 V600" stroke="#FFFFFF" stroke-width="1"/>
+    <path d="M700 0 V600" stroke="#FFFFFF" stroke-width="1"/>
+  </g>
+</svg>

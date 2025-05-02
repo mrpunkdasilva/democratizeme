@@ -44,8 +44,29 @@ export function FeatureSection() {
   ]
 
   return (
-    <Box py={16} bg={bgColor}>
-      <Container maxW="container.xl">
+    <Box 
+      py={16} 
+      bg={bgColor}
+      position="relative"
+      overflow="hidden"
+    >
+      {/* Background SVG para o modo escuro */}
+      {isDark && (
+        <Box
+          position="absolute"
+          top="0"
+          left="0"
+          right="0"
+          bottom="0"
+          opacity="0.1"
+          pointerEvents="none"
+          backgroundImage="url('/images/features-background.svg')"
+          backgroundSize="cover"
+          backgroundPosition="center"
+        />
+      )}
+      
+      <Container maxW="container.xl" position="relative" zIndex="1">
         <Flex 
           direction="column" 
           align="center" 

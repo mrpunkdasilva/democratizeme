@@ -1,74 +1,181 @@
-import { Politician, VoteResult, LawStatus, AllianceType } from './types'
+import { Politician as PoliticianType } from './types';
 
-export const mockPoliticians: Politician[] = [
+export type PoliticianStats = {
+  id: number;
+  name: string;
+  party: string;
+  state: string;
+  role: string;
+  avatar: string;
+  stats: {
+    overall: number;
+    presence: number;
+    projects: number;
+    transparency: number;
+    expenses: number;
+    trend: number;
+  };
+}
+
+export const mockPoliticians: PoliticianStats[] = [
   {
     id: 1,
-    name: "Maria Silva",
-    party: "PDB",
+    name: "Ana Silva",
+    party: "PSD",
+    state: "SP",
     role: "Deputada Federal",
-    image: "https://ui-avatars.com/api/?name=Maria+Silva&background=random",
-    status: "active",
-    expenses: {
-      total: 234567.89,
-      monthly: [
-        { month: "Jan", amount: 19500 },
-        { month: "Fev", amount: 21000 },
-        { month: "Mar", amount: 18900 },
-        { month: "Abr", amount: 22100 },
-        { month: "Mai", amount: 20500 },
-        { month: "Jun", amount: 19800 }
-      ]
-    },
-    votes: [
-      { id: 1, title: "PL 123/2023 - Reforma Tributária", date: "2023-08-15", result: "favor" as VoteResult },
-      { id: 2, title: "PEC 45/2023 - Reforma Administrativa", date: "2023-08-10", result: "contra" as VoteResult },
-      { id: 3, title: "PL 789/2023 - Lei de Diretrizes Orçamentárias", date: "2023-08-05", result: "favor" as VoteResult }
-    ],
-    laws: [
-      { id: 1, title: "PL 456/2023 - Incentivos à Energia Solar", status: "tramitando" as LawStatus, progress: 45, date: "2023-07-20" },
-      { id: 2, title: "PL 789/2023 - Mobilidade Urbana", status: "aprovado" as LawStatus, progress: 100, date: "2023-06-15" },
-      { id: 3, title: "PL 012/2023 - Reforma Educacional", status: "arquivado" as LawStatus, progress: 30, date: "2023-05-10" }
-    ],
-    bio: {
-      education: "Direito - Universidade Federal",
-      experience: [
-        "Vereadora (2016-2020)",
-        "Deputada Federal (2020-atual)",
-        "Presidente da Comissão de Direitos Humanos (2021-2022)"
-      ],
-      achievements: [
-        "Lei de Transparência Municipal",
-        "Programa de Modernização Escolar",
-        "Projeto Cidade Sustentável"
-      ]
-    },
-    alliances: [
-      {
-        id: 1,
-        party: "Partido A",
-        type: "aliado" as AllianceType,
-        representatives: [
-          { name: "João Silva", image: "https://ui-avatars.com/api/?name=Joao+Silva&background=random" },
-          { name: "Pedro Santos", image: "https://ui-avatars.com/api/?name=Pedro+Santos&background=random" }
-        ]
-      },
-      {
-        id: 2,
-        party: "Partido B",
-        type: "oposição" as AllianceType,
-        representatives: [
-          { name: "Ana Oliveira", image: "https://ui-avatars.com/api/?name=Ana+Oliveira&background=random" },
-          { name: "Carlos Souza", image: "https://ui-avatars.com/api/?name=Carlos+Souza&background=random" }
-        ]
-      },
-      {
-        id: 3,
-        party: "Partido C",
-        type: "neutro" as AllianceType,
-        representatives: [
-          { name: "Paula Costa", image: "https://ui-avatars.com/api/?name=Paula+Costa&background=random" }
-        ]
-      }
-    ]
+    avatar: "https://i.pravatar.cc/150?img=1",
+    stats: {
+      overall: 87,
+      presence: 92,
+      projects: 78,
+      transparency: 85,
+      expenses: 25,
+      trend: 3
+    }
+  },
+  {
+    id: 2,
+    name: "Carlos Pereira",
+    party: "PT",
+    state: "RJ",
+    role: "Senador",
+    avatar: "https://i.pravatar.cc/150?img=2",
+    stats: {
+      overall: 75,
+      presence: 85,
+      projects: 60,
+      transparency: 70,
+      expenses: 30,
+      trend: -2
+    }
+  },
+  {
+    id: 3,
+    name: "Fernanda Costa",
+    party: "MDB",
+    state: "MG",
+    role: "Deputada Estadual",
+    avatar: "https://i.pravatar.cc/150?img=3",
+    stats: {
+      overall: 90,
+      presence: 95,
+      projects: 80,
+      transparency: 90,
+      expenses: 15,
+      trend: 5
+    }
+  },
+  {
+    id: 4,
+    name: "João Oliveira",
+    party: "PP",
+    state: "BA",
+    role: "Deputado Distrital",
+    avatar: "https://i.pravatar.cc/150?img=4",
+    stats: {
+      overall: 60,
+      presence: 70,
+      projects: 40,
+      transparency: 60,
+      expenses: 40,
+      trend: -1
+    }
+  },
+  {
+    id: 5,
+    name: "Maria Santos",
+    party: "PSOL",
+    state: "RS",
+    role: "Deputada Federal",
+    avatar: "https://i.pravatar.cc/150?img=5",
+    stats: {
+      overall: 80,
+      presence: 88,
+      projects: 70,
+      transparency: 82,
+      expenses: 20,
+      trend: 4
+    }
+  },
+  {
+    id: 6,
+    name: "Pedro Lima",
+    party: "PDT",
+    state: "SC",
+    role: "Deputado Estadual",
+    avatar: "https://i.pravatar.cc/150?img=6",
+    stats: {
+      overall: 70,
+      presence: 80,
+      projects: 50,
+      transparency: 75,
+      expenses: 35,
+      trend: 2
+    }
+  },
+  {
+    id: 7,
+    name: "Rafaela Ferreira",
+    party: "PV",
+    state: "PR",
+    role: "Deputada Federal",
+    avatar: "https://i.pravatar.cc/150?img=7",
+    stats: {
+      overall: 85,
+      presence: 90,
+      projects: 75,
+      transparency: 88,
+      expenses: 10,
+      trend: 6
+    }
+  },
+  {
+    id: 8,
+    name: "Tiago Costa",
+    party: "PMDB",
+    state: "CE",
+    role: "Deputado Distrital",
+    avatar: "https://i.pravatar.cc/150?img=8",
+    stats: {
+      overall: 65,
+      presence: 75,
+      projects: 45,
+      transparency: 65,
+      expenses: 45,
+      trend: -3
+    }
+  },
+  {
+    id: 9,
+    name: "Vânia Souza",
+    party: "PCdoB",
+    state: "AM",
+    role: "Deputada Federal",
+    avatar: "https://i.pravatar.cc/150?img=9",
+    stats: {
+      overall: 95,
+      presence: 100,
+      projects: 85,
+      transparency: 95,
+      expenses: 5,
+      trend: 7
+    }
+  },
+  {
+    id: 10,
+    name: "Wagner Pereira",
+    party: "PS",
+    state: "GO",
+    role: "Deputado Estadual",
+    avatar: "https://i.pravatar.cc/150?img=10",
+    stats: {
+      overall: 78,
+      presence: 85,
+      projects: 65,
+      transparency: 80,
+      expenses: 28,
+      trend: 1
+    }
   }
-]
+];

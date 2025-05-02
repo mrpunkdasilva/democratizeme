@@ -1,7 +1,8 @@
-import { Box, Container, Text, Flex, Link, useColorModeValue } from '@chakra-ui/react'
+import { Box, Container, Flex, Link, Text, useColorModeValue } from '@chakra-ui/react'
+import NextLink from 'next/link'
 
 export function Footer() {
-  const bgColor = useColorModeValue('gray.100', 'gray.900')
+  const bgColor = useColorModeValue('gray.50', 'gray.900')
   const textColor = useColorModeValue('gray.600', 'gray.400')
 
   return (
@@ -12,18 +13,26 @@ export function Footer() {
             © 2023 democratize.me. Todos os direitos reservados.
           </Text>
           <Flex gap={6} mt={{ base: 4, md: 0 }}>
-            <Link href="/sobre" color={textColor} fontSize="sm">
-              Sobre
-            </Link>
-            <Link href="/privacidade" color={textColor} fontSize="sm">
-              Privacidade
-            </Link>
-            <Link href="/termos" color={textColor} fontSize="sm">
-              Termos de Uso
-            </Link>
-            <Link href="/contato" color={textColor} fontSize="sm">
-              Contato
-            </Link>
+            <NextLink href="/sobre" passHref>
+              <Link color={textColor} fontSize="sm">
+                Sobre
+              </Link>
+            </NextLink>
+            <NextLink href="/privacidade" passHref>
+              <Link color={textColor} fontSize="sm">
+                Privacidade
+              </Link>
+            </NextLink>
+            <NextLink href="/termos" passHref>
+              <Link color={textColor} fontSize="sm">
+                Termos de Uso
+              </Link>
+            </NextLink>
+            <NextLink href="/contato" passHref>
+              <Link color={textColor} fontSize="sm">
+                Contato
+              </Link>
+            </NextLink>
           </Flex>
         </Flex>
       </Container>
