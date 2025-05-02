@@ -52,6 +52,26 @@ Sistema de transparência e engajamento político que permite aos cidadãos acom
 - [ ] Informações contextuais
 - [ ] Animações suaves de transição
 
+### 7. Educação Cidadã
+- [ ] Glossário de termos políticos e jurídicos
+- [ ] Guias explicativos sobre o processo legislativo
+- [ ] Biblioteca de direitos do cidadão
+- [ ] Conteúdo sobre estrutura dos três poderes
+- [ ] Tutoriais interativos sobre participação política
+- [ ] Quiz e jogos educativos sobre cidadania
+
+### 8. Comparativo de Propostas
+- [ ] Ferramenta para comparar propostas de diferentes políticos
+- [ ] Análise de impacto das propostas
+- [ ] Histórico de promessas vs. realizações
+- [ ] Visualização lado a lado de posicionamentos
+
+### 9. Mapa de Representatividade
+- [ ] Visualização geográfica de representantes por região
+- [ ] Estatísticas demográficas de representatividade
+- [ ] Comparativo entre perfil populacional e perfil político
+- [ ] Filtros por gênero, raça, idade e formação
+
 ## 🎨 Design System
 - [x] Interface minimalista
 - [x] Paleta de cores moderna
@@ -69,6 +89,8 @@ Sistema de transparência e engajamento político que permite aos cidadãos acom
 - [ ] Testes automatizados
 - [ ] CI/CD pipeline
 - [x] Documentação técnica (parcial)
+- [ ] Acessibilidade (WCAG 2.1)
+- [ ] Internacionalização (i18n)
 
 ## 📱 Plataformas
 - [x] Web (Desktop)
@@ -83,16 +105,22 @@ Sistema de transparência e engajamento político que permite aos cidadãos acom
 4. Sistema de Ranking ✅ (90%)
 5. Zona de Alertas ⏳ (0%)
 6. Visualização 3D ⏳ (0%)
+7. Educação Cidadã ⏳ (0%)
+8. Comparativo de Propostas ⏳ (0%)
+9. Mapa de Representatividade ⏳ (0%)
 
 ## ⚠️ Considerações
 - Verificar fontes oficiais de dados
 - Implementar medidas anti-fake news
 - Garantir neutralidade política
 - Seguir LGPD
-- Acessibilidade...
+- Acessibilidade para todos os usuários
+- Linguagem inclusiva e acessível
+- Transparência sobre fontes de informação
 
 ## 📊 Progresso Geral
 - Design System: 100%
-- Features Principais: 40%
+- Features Principais (1-6): 40%
+- Features Adicionais (7-9): 0%
 - Requisitos Técnicos: 30%
 - Plataformas: 50%
