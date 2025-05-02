@@ -1,0 +1,38 @@
+{
+  "name": "democratize.me",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "generate-favicon": "npx svg-to-ico public/favicon.svg public/favicon.ico"
+  },
+  "dependencies": {
+    "@chakra-ui/icons": "^2.2.4",
+    "@chakra-ui/react": "^2.8.0",
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@prisma/client": "^5.1.1",
+    "framer-motion": "^10.16.0",
+    "next": "13.4.19",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-icons": "^5.5.0",
+    "react-three-fiber": "^6.0.13",
+    "three": "^0.155.0",
+    "typescript": "5.1.6",
+    "zustand": "^4.4.1"
+  },
+  "devDependencies": {
+    "@types/node": "20.5.1",
+    "@types/react": "18.2.20",
+    "@types/react-dom": "18.2.7",
+    "@types/three": "^0.155.0",
+    "eslint": "8.47.0",
+    "eslint-config-next": "13.4.19",
+    "prisma": "^5.1.1",
+    "svg-to-ico": "^1.0.0"
+  }
+}

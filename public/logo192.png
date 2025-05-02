@@ -1,0 +1,3 @@
+# Este é um arquivo binário (PNG), então não posso mostrar o conteúdo real aqui.
+# Você precisará converter o SVG para PNG usando uma ferramenta como:
+# npx svg2png-cli public/logo.svg public/logo192.png --width=192 --height=192

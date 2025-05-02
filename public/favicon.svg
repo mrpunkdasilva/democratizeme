@@ -1,0 +1,19 @@
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Hexágono base -->
+  <polygon points="16,2 28,8 28,24 16,30 4,24 4,8" fill="#0A1929" stroke="#00FFFF" stroke-width="1"/>
+  
+  <!-- Colunas minimalistas -->
+  <rect x="10" y="11" width="2" height="13" rx="0.5" fill="#00FFFF" opacity="0.7"/>
+  <rect x="15" y="8" width="2" height="16" rx="0.5" fill="#00FFFF" opacity="0.9"/>
+  <rect x="20" y="11" width="2" height="13" rx="0.5" fill="#00FFFF" opacity="0.7"/>
+  
+  <!-- Arco superior -->
+  <path d="M8 11C8 11 12 6 16 6C20 6 24 11 24 11" stroke="#00FFFF" stroke-width="1" stroke-linecap="round"/>
+  
+  <!-- Base digital -->
+  <rect x="8" y="24" width="16" height="1" rx="0.5" fill="#00FFFF"/>
+  
+  <!-- Linhas de grade -->
+  <line x1="16" y1="2" x2="16" y2="30" stroke="#2196F3" stroke-width="0.2" stroke-opacity="0.3"/>
+  <line x1="4" y1="16" x2="28" y2="16" stroke="#2196F3" stroke-width="0.2" stroke-opacity="0.3"/>
+</svg>
