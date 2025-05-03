@@ -4,7 +4,7 @@
 Sistema de transparência e engajamento político que permite aos cidadãos acompanharem, analisarem e discutirem atividades políticas de forma interativa e moderna.
 
 ## 📋 Features Principais
-
+ 
 ### 1. Dashboard de Políticos
 - [x] Visualização de gastos e despesas (básico)
 - [x] Histórico de votações (básico)
@@ -53,12 +53,12 @@ Sistema de transparência e engajamento político que permite aos cidadãos acom
 - [ ] Animações suaves de transição
 
 ### 7. Educação Cidadã
-- [ ] Glossário de termos políticos e jurídicos
-- [ ] Guias explicativos sobre o processo legislativo
+- [x] Glossário de termos políticos e jurídicos
+- [x] Guias explicativos sobre o processo legislativo
 - [ ] Biblioteca de direitos do cidadão
-- [ ] Conteúdo sobre estrutura dos três poderes
-- [ ] Tutoriais interativos sobre participação política
-- [ ] Quiz e jogos educativos sobre cidadania
+- [x] Conteúdo sobre estrutura dos três poderes
+- [x] Tutoriais interativos sobre participação política
+- [x] Quiz e jogos educativos sobre cidadania
 
 ### 8. Comparativo de Propostas
 - [ ] Ferramenta para comparar propostas de diferentes políticos
@@ -105,7 +105,7 @@ Sistema de transparência e engajamento político que permite aos cidadãos acom
 4. Sistema de Ranking ✅ (90%)
 5. Zona de Alertas ⏳ (0%)
 6. Visualização 3D ⏳ (0%)
-7. Educação Cidadã ⏳ (0%)
+7. Educação Cidadã ✅ (70%)
 8. Comparativo de Propostas ⏳ (0%)
 9. Mapa de Representatividade ⏳ (0%)
 
@@ -120,7 +120,32 @@ Sistema de transparência e engajamento político que permite aos cidadãos acom
 
 ## 📊 Progresso Geral
 - Design System: 100%
-- Features Principais (1-6): 40%
-- Features Adicionais (7-9): 0%
+- Features Principais (1-4): 60%
+- Features Adicionais (5-9): 15%
 - Requisitos Técnicos: 30%
 - Plataformas: 50%
+
+## 🐛 Bugs Conhecidos
+- [ ] #1: Gráfico de gastos não carrega corretamente em telas pequenas
+- [ ] #2: Filtro de projetos de lei não persiste após navegação
+- [ ] #3: Modo escuro apresenta problemas de contraste em alguns componentes
+- [ ] #4: Calendário de votações não exibe eventos corretamente em Safari
+
+## 🔜 Próximos Passos
+1. Implementar sistema de autenticação
+2. Desenvolver componentes do Fórum Cidadão
+3. Melhorar acessibilidade geral da plataforma
+4. Adicionar mais conteúdo educativo
+5. Implementar sistema de notificações
+
+## 👥 Equipe
+- UX/UI Designer: 1
+- Frontend Developers: 2
+- Backend Developers: 1
+- Content Writers: 1
+
+## 📅 Timeline
+- **Fase 1 (Concluída)**: Design System e protótipos
+- **Fase 2 (Em andamento)**: Implementação das features principais (1-4)
+- **Fase 3 (Planejada)**: Implementação da Educação Cidadã e Fórum
+- **Fase 4 (Futura)**: Features avançadas e otimizações
