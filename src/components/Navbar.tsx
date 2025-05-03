@@ -139,9 +139,11 @@ export function Navbar() {
           spacing={1} 
           display={{ base: 'none', md: 'flex' }}
         >
+          <NavLink href="/">Home</NavLink>
           <NavLink href="/dashboard">Dashboard</NavLink>
           <NavLink href="/monitor">Monitor</NavLink>
           <NavLink href="/forum">Fórum</NavLink>
+          <NavLink href="/education">Educação</NavLink>
           <NavLink href="/ranking">Ranking</NavLink>
           
           <Button
@@ -188,9 +190,11 @@ export function Navbar() {
           borderColor={borderColor}
         >
           <VStack as="nav" spacing={2} align="stretch" pt={2}>
+            <NavLink href="/">Home</NavLink>
             <NavLink href="/dashboard">Dashboard</NavLink>
             <NavLink href="/monitor">Monitor</NavLink>
             <NavLink href="/forum">Fórum</NavLink>
+            <NavLink href="/education">Educação</NavLink>
             <NavLink href="/ranking">Ranking</NavLink>
           </VStack>
         </Box>

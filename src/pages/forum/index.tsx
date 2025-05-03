@@ -27,6 +27,7 @@ import { Layout } from '../../components/Layout'
 import { TopicsList } from '../../components/forum/TopicsList'
 import { PopularTags } from '../../components/forum/PopularTags'
 import { TopContributors } from '../../components/forum/TopContributors'
+import { EducationBanner } from '../../components/forum/EducationBanner'
 
 export default function ForumPage() {
   const [searchTerm, setSearchTerm] = useState('')
@@ -42,43 +43,30 @@ export default function ForumPage() {
   
   return (
     <Layout 
-      title="Fórum Cidadão | democratize.me" 
-      description="Participe de discussões sobre política, projetos de lei e temas relevantes para a sociedade"
+      title="Fórum Cidadão | Democratize"
+      description="Participe de discussões sobre política, legislação e cidadania"
     >
       <Box bg={bgColor} minH="calc(100vh - 80px)" py={8}>
         <Container maxW="container.xl">
           {/* Cabeçalho */}
-          <Flex 
-            direction={{ base: 'column', md: 'row' }} 
-            justify="space-between" 
-            align={{ base: 'flex-start', md: 'center' }}
-            mb={8}
-          >
-            <Box mb={{ base: 4, md: 0 }}>
-              <Heading 
-                as="h1" 
-                size="xl" 
-                mb={2}
-                bgGradient={isDark ? "linear(to-r, primary.400, cyberpunk.accent)" : "linear(to-r, primary.500, primary.700)"}
-                bgClip={isDark ? "text" : undefined}
-                color={isDark ? undefined : textColor}
-              >
-                Fórum Cidadão
-              </Heading>
-              <Text color={mutedColor} fontSize="lg">
-                Participe de discussões sobre política, projetos de lei e temas relevantes
-              </Text>
-            </Box>
-            
-            <Button
-              leftIcon={<Icon as={FaPlus} />}
-              colorScheme="primary"
-              variant={isDark ? "cyberpunk" : "solid"}
-              size="md"
+          <Box mb={8}>
+            <Heading 
+              as="h1" 
+              size="xl" 
+              mb={4}
+              bgGradient={isDark ? "linear(to-r, primary.400, cyberpunk.accent)" : undefined}
+              bgClip={isDark ? "text" : undefined}
+              color={isDark ? "transparent" : textColor}
             >
-              Novo Tópico
-            </Button>
-          </Flex>
+              Fórum Cidadão
+            </Heading>
+            <Text fontSize="lg" color={textColor}>
+              Participe de discussões sobre política, legislação e cidadania
+            </Text>
+          </Box>
+          
+          {/* Banner de Educação */}
+          <EducationBanner />
           
           {/* Barra de busca e filtros */}
           <Flex 

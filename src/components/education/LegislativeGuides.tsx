@@ -69,7 +69,7 @@ export function LegislativeGuides({ searchTerm }: LegislativeGuidesProps) {
         borderColor={useColorModeValue('gray.200', 'gray.700')}
       >
         <Image 
-          src="/images/legislative-process-flow.svg" 
+          src="/images/legislative-process.svg" 
           alt="Fluxo do Processo Legislativo" 
           fallbackSrc="https://via.placeholder.com/800x300?text=Fluxo+do+Processo+Legislativo"
           width="100%"
