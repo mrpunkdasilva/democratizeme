@@ -13,7 +13,8 @@ import {
 } from '@chakra-ui/react'
 import { FaFileAlt, FaArrowRight, FaClock, FaUsers } from 'react-icons/fa'
 import { EducationCard } from './EducationCard'
-import { legislativeGuides } from '../../mocks/education'
+import { ArticleCard } from './ArticleCard'
+import { educationArticles } from '../../data/educationArticlesData'
 
 interface LegislativeGuidesProps {
   searchTerm: string;
@@ -22,34 +23,27 @@ interface LegislativeGuidesProps {
 export function LegislativeGuides({ searchTerm }: LegislativeGuidesProps) {
   const textColor = useColorModeValue('gray.800', 'gray.100')
   const mutedColor = useColorModeValue('gray.600', 'gray.400')
-  
-  // Filtrar guias com base na busca
-  const filteredGuides = legislativeGuides.filter(guide => 
-    guide.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
-    guide.description.toLowerCase().includes(searchTerm.toLowerCase())
+
+  // Filtrar artigos com base na busca
+  const filteredArticles = educationArticles.filter(article =>
+    article.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    article.content.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    article.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    article.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()))
   );
-  
+
   return (
     <Box>
       <Text mb={6} color={mutedColor}>
         Entenda como funciona o processo legislativo brasileiro, desde a proposta de uma lei até sua aprovação e implementação.
       </Text>
-      
-      {filteredGuides.length === 0 ? (
-        <Text>Nenhum guia encontrado para "{searchTerm}"</Text>
+
+      {filteredArticles.length === 0 ? (
+        <Text>Nenhum artigo encontrado para "{searchTerm}"</Text>
       ) : (
         <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={6}>
-          {filteredGuides.map((guide, index) => (
-            <EducationCard
-              key={index}
-              title={guide.title}
-              description={guide.description}
-              image={guide.image}
-              icon={FaFileAlt}
-              tags={guide.tags}
-              readTime={guide.readTime}
-              complexity={guide.complexity}
-            />
+          {filteredArticles.map((article) => (
+            <ArticleCard key={article.id} article={article} />
           ))}
         </SimpleGrid>
       )}

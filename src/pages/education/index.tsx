@@ -18,10 +18,11 @@ import {
   Icon,
   Divider
 } from '@chakra-ui/react'
-import { FaSearch, FaBook, FaBalanceScale, FaUniversity } from 'react-icons/fa'
+import { FaSearch, FaBook, FaBalanceScale, FaUniversity, FaQuestion } from 'react-icons/fa'
 import { Layout } from '../../components/Layout'
 import { GlossarySection } from '../../components/education/GlossarySection'
 import { LegislativeGuides } from '../../components/education/LegislativeGuides'
+import { DemocracyQuiz } from '../../components/education/DemocracyQuiz'
 
 export default function Education() {
   const [searchTerm, setSearchTerm] = useState('')
@@ -91,8 +92,8 @@ export default function Education() {
                 Processo Legislativo
               </Tab>
               <Tab>
-                <Icon as={FaUniversity} mr={2} />
-                Direitos do Cidadão
+                <Icon as={FaQuestion} mr={2} />
+                Quiz Democrático
               </Tab>
             </TabList>
             
@@ -104,7 +105,7 @@ export default function Education() {
                 <LegislativeGuides searchTerm={searchTerm} />
               </TabPanel>
               <TabPanel>
-                <Text>Conteúdo sobre direitos do cidadão será implementado em breve.</Text>
+                <DemocracyQuiz />
               </TabPanel>
             </TabPanels>
           </Tabs>
