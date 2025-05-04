@@ -16,6 +16,7 @@ import {
   useToast
 } from '@chakra-ui/react';
 import { FaCheck, FaTimes, FaQuestionCircle, FaTrophy, FaArrowRight } from 'react-icons/fa';
+import { NoSSR } from '../NoSSR';
 
 // Perguntas do quiz
 const quizQuestions = [
@@ -146,163 +147,165 @@ export function DemocracyQuiz() {
   };
   
   return (
-    <Box
-      bg={bgColor}
-      borderRadius="lg"
-      borderWidth="1px"
-      borderColor={borderColor}
-      overflow="hidden"
-      boxShadow="sm"
-    >
-      <Box p={6} borderBottomWidth="1px" borderColor={borderColor}>
-        <Flex justify="space-between" align="center">
-          <Heading as="h3" size="md" color={textColor}>
-            Quiz Democrático
-          </Heading>
-          
-          {!completed && (
-            <HStack>
-              <Text fontSize="sm" color={mutedColor}>
-                Questão {currentQuestion + 1} de {quizQuestions.length}
-              </Text>
-              <Badge colorScheme="blue">
-                {score} pontos
-              </Badge>
-            </HStack>
-          )}
-        </Flex>
-      </Box>
-      
-      <Box p={6}>
-        {!completed ? (
-          <>
-            <Progress
-              value={(currentQuestion / quizQuestions.length) * 100}
-              size="sm"
-              colorScheme="blue"
-              borderRadius="full"
-              mb={6}
-            />
+    <NoSSR>
+      <Box
+        bg={bgColor}
+        borderRadius="lg"
+        borderWidth="1px"
+        borderColor={borderColor}
+        overflow="hidden"
+        boxShadow="sm"
+      >
+        <Box p={6} borderBottomWidth="1px" borderColor={borderColor}>
+          <Flex justify="space-between" align="center">
+            <Heading as="h3" size="md" color={textColor}>
+              Quiz Democrático
+            </Heading>
             
-            <Box mb={6}>
-              <Text fontSize="lg" fontWeight="medium" mb={4}>
-                {quizQuestions[currentQuestion].question}
+            {!completed && (
+              <HStack>
+                <Text fontSize="sm" color={mutedColor}>
+                  Questão {currentQuestion + 1} de {quizQuestions.length}
+                </Text>
+                <Badge colorScheme="blue">
+                  {score} pontos
+                </Badge>
+              </HStack>
+            )}
+          </Flex>
+        </Box>
+        
+        <Box p={6}>
+          {!completed ? (
+            <>
+              <Progress
+                value={(currentQuestion / quizQuestions.length) * 100}
+                size="sm"
+                colorScheme="blue"
+                borderRadius="full"
+                mb={6}
+              />
+              
+              <Box mb={6}>
+                <Text fontSize="lg" fontWeight="medium" mb={4}>
+                  {quizQuestions[currentQuestion].question}
+                </Text>
+                
+                <RadioGroup 
+                  onChange={(value) => setSelectedOption(parseInt(value))}
+                  value={selectedOption !== null ? selectedOption.toString() : undefined}
+                  isDisabled={showAnswer}
+                >
+                  <VStack spacing={3} align="stretch">
+                    {quizQuestions[currentQuestion].options.map((option, index) => (
+                      <Box
+                        key={index}
+                        p={3}
+                        borderWidth="1px"
+                        borderRadius="md"
+                        borderColor={borderColor}
+                        bg={
+                          showAnswer
+                            ? index === quizQuestions[currentQuestion].correctAnswer
+                              ? correctBg
+                              : selectedOption === index
+                                ? incorrectBg
+                                : 'transparent'
+                            : 'transparent'
+                        }
+                        _hover={!showAnswer ? { bg: useColorModeValue('gray.50', 'gray.700') } : {}}
+                      >
+                        <Radio value={index.toString()} colorScheme="blue" size="lg">
+                          <Flex align="center" justify="space-between" width="100%">
+                            <Text>{option}</Text>
+                            {showAnswer && index === quizQuestions[currentQuestion].correctAnswer && (
+                              <Icon as={FaCheck} color="green.500" boxSize={5} />
+                            )}
+                            {showAnswer && selectedOption === index && index !== quizQuestions[currentQuestion].correctAnswer && (
+                              <Icon as={FaTimes} color="red.500" boxSize={5} />
+                            )}
+                          </Flex>
+                        </Radio>
+                      </Box>
+                    ))}
+                  </VStack>
+                </RadioGroup>
+              </Box>
+              
+              {showAnswer && (
+                <Box
+                  p={4}
+                  bg={useColorModeValue('blue.50', 'rgba(66, 153, 225, 0.1)')}
+                  borderRadius="md"
+                  mb={6}
+                >
+                  <Flex align="center" mb={2}>
+                    <Icon as={FaQuestionCircle} color="blue.500" mr={2} />
+                    <Text fontWeight="medium">Explicação:</Text>
+                  </Flex>
+                  <Text>{quizQuestions[currentQuestion].explanation}</Text>
+                </Box>
+              )}
+              
+              <Flex justify="center">
+                {!showAnswer ? (
+                  <Button
+                    colorScheme="blue"
+                    onClick={handleAnswer}
+                    isDisabled={selectedOption === null}
+                    size="lg"
+                    px={8}
+                  >
+                    Verificar
+                  </Button>
+                ) : (
+                  <Button
+                    colorScheme="blue"
+                    onClick={handleNext}
+                    size="lg"
+                    px={8}
+                    rightIcon={<Icon as={FaArrowRight} />}
+                  >
+                    {currentQuestion < quizQuestions.length - 1 ? 'Próxima Questão' : 'Ver Resultado'}
+                  </Button>
+                )}
+              </Flex>
+            </>
+          ) : (
+            <VStack spacing={6} align="center" py={4}>
+              <Icon as={FaTrophy} boxSize={16} color="yellow.400" />
+              
+              <Heading size="lg" textAlign="center">
+                Quiz Concluído!
+              </Heading>
+              
+              <Text fontSize="xl" fontWeight="bold" textAlign="center">
+                Sua pontuação: {score} de {quizQuestions.length}
               </Text>
               
-              <RadioGroup 
-                onChange={(value) => setSelectedOption(parseInt(value))}
-                value={selectedOption !== null ? selectedOption.toString() : undefined}
-                isDisabled={showAnswer}
-              >
-                <VStack spacing={3} align="stretch">
-                  {quizQuestions[currentQuestion].options.map((option, index) => (
-                    <Box
-                      key={index}
-                      p={3}
-                      borderWidth="1px"
-                      borderRadius="md"
-                      borderColor={borderColor}
-                      bg={
-                        showAnswer
-                          ? index === quizQuestions[currentQuestion].correctAnswer
-                            ? correctBg
-                            : selectedOption === index
-                              ? incorrectBg
-                              : 'transparent'
-                          : 'transparent'
-                      }
-                      _hover={!showAnswer ? { bg: useColorModeValue('gray.50', 'gray.700') } : {}}
-                    >
-                      <Radio value={index.toString()} colorScheme="blue" size="lg">
-                        <Flex align="center" justify="space-between" width="100%">
-                          <Text>{option}</Text>
-                          {showAnswer && index === quizQuestions[currentQuestion].correctAnswer && (
-                            <Icon as={FaCheck} color="green.500" boxSize={5} />
-                          )}
-                          {showAnswer && selectedOption === index && index !== quizQuestions[currentQuestion].correctAnswer && (
-                            <Icon as={FaTimes} color="red.500" boxSize={5} />
-                          )}
-                        </Flex>
-                      </Radio>
-                    </Box>
-                  ))}
-                </VStack>
-              </RadioGroup>
-            </Box>
-            
-            {showAnswer && (
               <Box
                 p={4}
                 bg={useColorModeValue('blue.50', 'rgba(66, 153, 225, 0.1)')}
                 borderRadius="md"
-                mb={6}
+                width="full"
+                textAlign="center"
               >
-                <Flex align="center" mb={2}>
-                  <Icon as={FaQuestionCircle} color="blue.500" mr={2} />
-                  <Text fontWeight="medium">Explicação:</Text>
-                </Flex>
-                <Text>{quizQuestions[currentQuestion].explanation}</Text>
+                <Text fontSize="lg">{getScoreMessage()}</Text>
               </Box>
-            )}
-            
-            <Flex justify="center">
-              {!showAnswer ? (
-                <Button
-                  colorScheme="blue"
-                  onClick={handleAnswer}
-                  isDisabled={selectedOption === null}
-                  size="lg"
-                  px={8}
-                >
-                  Verificar
-                </Button>
-              ) : (
-                <Button
-                  colorScheme="blue"
-                  onClick={handleNext}
-                  size="lg"
-                  px={8}
-                  rightIcon={<Icon as={FaArrowRight} />}
-                >
-                  {currentQuestion < quizQuestions.length - 1 ? 'Próxima Questão' : 'Ver Resultado'}
-                </Button>
-              )}
-            </Flex>
-          </>
-        ) : (
-          <VStack spacing={6} align="center" py={4}>
-            <Icon as={FaTrophy} boxSize={16} color="yellow.400" />
-            
-            <Heading size="lg" textAlign="center">
-              Quiz Concluído!
-            </Heading>
-            
-            <Text fontSize="xl" fontWeight="bold" textAlign="center">
-              Sua pontuação: {score} de {quizQuestions.length}
-            </Text>
-            
-            <Box
-              p={4}
-              bg={useColorModeValue('blue.50', 'rgba(66, 153, 225, 0.1)')}
-              borderRadius="md"
-              width="full"
-              textAlign="center"
-            >
-              <Text fontSize="lg">{getScoreMessage()}</Text>
-            </Box>
-            
-            <Button
-              colorScheme="blue"
-              onClick={handleRestart}
-              size="lg"
-              px={8}
-              mt={4}
-            >
-              Tentar Novamente
-            </Button>
-          </VStack>
-        )}
+              
+              <Button
+                colorScheme="blue"
+                onClick={handleRestart}
+                size="lg"
+                px={8}
+                mt={4}
+              >
+                Tentar Novamente
+              </Button>
+            </VStack>
+          )}
+        </Box>
       </Box>
-    </Box>
+    </NoSSR>
   );
 }

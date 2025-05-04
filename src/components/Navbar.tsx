@@ -1,214 +1,449 @@
-import { 
-  Box, 
-  Flex, 
-  Button, 
-  useColorMode,
-  VisuallyHidden,
-  useDisclosure,
-  IconButton,
-  VStack,
-  HStack,
-  Image,
+import React from 'react';
+import {
+  Box,
+  Flex,
   Text,
-  Link,
-  useColorModeValue
-} from '@chakra-ui/react'
-import { keyframes } from '@emotion/react'
-import { HamburgerIcon, CloseIcon, MoonIcon, SunIcon } from '@chakra-ui/icons'
-import NextLink from 'next/link'
-import { useRouter } from 'next/router'
-import { NotificationCenter } from './notifications/NotificationCenter'
-
-// Keyframes para o efeito de brilho cyberpunk
-const glowPulse = keyframes`
-  0% { filter: drop-shadow(0 0 1px #00FFFF); }
-  50% { filter: drop-shadow(0 0 3px #00FFFF); }
-  100% { filter: drop-shadow(0 0 1px #00FFFF); }
-`;
-
-// Componente NavLink melhorado
-const NavLink = ({ href, children }) => {
-  const router = useRouter();
-  const isActive = router.pathname === href;
-  const isDark = useColorModeValue(false, true);
-  
-  // Cores melhoradas para os links
-  const linkColor = useColorModeValue('gray.700', 'gray.200');
-  const activeColor = useColorModeValue('primary.600', 'cyberpunk.accent');
-  const hoverBg = useColorModeValue('gray.100', 'rgba(0, 255, 255, 0.1)');
-  const activeBg = useColorModeValue('gray.100', 'rgba(0, 255, 255, 0.15)');
-  
-  return (
-    <NextLink href={href} passHref>
-      <Link
-        px={3}
-        py={2}
-        rounded={'md'}
-        fontWeight={isActive ? "semibold" : "medium"}
-        color={isActive ? activeColor : linkColor}
-        bg={isActive ? activeBg : 'transparent'}
-        position="relative"
-        transition="all 0.2s ease"
-        _hover={{
-          textDecoration: 'none',
-          bg: hoverBg,
-          color: activeColor,
-        }}
-        _after={
-          isActive && isDark
-            ? {
-                content: '""',
-                position: 'absolute',
-                bottom: '0',
-                left: '20%',
-                right: '20%',
-                height: '2px',
-                bg: 'cyberpunk.accent',
-                borderRadius: 'full',
-              }
-            : {}
-        }
-      >
-        {children}
-      </Link>
-    </NextLink>
-  );
-};
+  IconButton,
+  Button,
+  Stack,
+  Collapse,
+  Icon,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  useColorModeValue,
+  useBreakpointValue,
+  useDisclosure,
+  Container,
+  useColorMode,
+  HStack,
+  Avatar,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  MenuDivider,
+  Badge,
+  Link
+} from '@chakra-ui/react';
+import {
+  HamburgerIcon,
+  CloseIcon,
+  ChevronDownIcon,
+  ChevronRightIcon,
+  MoonIcon,
+  SunIcon,
+  BellIcon
+} from '@chakra-ui/icons';
+import { Logo } from './Logo';
+import { useNotifications } from '../contexts/NotificationContext';
+import { ChakraNextLink } from './ChakraNextLink';
+import { NoSSR } from './NoSSR';
 
 export function Navbar() {
+  const { isOpen, onToggle } = useDisclosure();
   const { colorMode, toggleColorMode } = useColorMode();
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const router = useRouter();
+  const { unreadCount } = useNotifications();
   
-  // Cores melhoradas para a navbar
-  const bgColor = useColorModeValue('white', 'gray.900');
-  const borderColor = useColorModeValue('gray.200', 'rgba(0, 255, 255, 0.1)');
-  const logoColor = useColorModeValue('gray.800', 'white');
-  const buttonHoverBg = useColorModeValue('gray.100', 'rgba(0, 255, 255, 0.1)');
-  
-  // Animação para o efeito de brilho
-  const glowAnimation = `${glowPulse} 2s infinite ease-in-out`;
+  const isDark = colorMode === 'dark';
   
   return (
-    <Box 
-      as="nav" 
-      bg={bgColor}
-      px={4}
-      boxShadow="sm"
+    <Box
       position="sticky"
       top={0}
-      zIndex={10}
-      borderBottom="1px"
-      borderColor={borderColor}
-      backdropFilter="blur(10px)"
+      zIndex={1000}
+      bg={useColorModeValue('white', 'gray.900')}
+      borderBottom={1}
+      borderStyle={'solid'}
+      borderColor={useColorModeValue('gray.200', 'gray.700')}
+      shadow="sm"
+      transition="background-color 0.2s"
     >
-      <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
-        <NextLink href="/" passHref>
-          <Box 
-            display="flex" 
-            alignItems="center"
-            cursor="pointer"
-            transition="transform 0.2s"
-            _hover={{ transform: "scale(1.02)" }}
+      <Container maxW="container.xl">
+        <Flex
+          color={useColorModeValue('gray.600', 'white')}
+          minH={'60px'}
+          py={{ base: 2 }}
+          px={{ base: 4 }}
+          align={'center'}
+        >
+          <Flex
+            flex={{ base: 1, md: 'auto' }}
+            ml={{ base: -2 }}
+            display={{ base: 'flex', md: 'none' }}
           >
-            <Image 
-              src="/logo.svg" 
-              alt="Democratize Logo" 
-              height="36px" 
-              width="36px" 
-              mr={3}
-              animation={colorMode === 'dark' ? glowAnimation : undefined}
+            <IconButton
+              onClick={onToggle}
+              icon={
+                isOpen ? <CloseIcon w={3} h={3} /> : <HamburgerIcon w={5} h={5} />
+              }
+              variant={'ghost'}
+              aria-label={'Toggle Navigation'}
             />
-            <Text
-              fontSize="lg" 
-              fontWeight="bold"
-              fontFamily="mono"
-              letterSpacing="wider"
-              bgGradient={colorMode === 'dark' ? "linear(to-r, #2196F3, #00FFFF)" : undefined}
-              bgClip={colorMode === 'dark' ? "text" : undefined}
-              color={colorMode === 'dark' ? "transparent" : logoColor}
-              textTransform="uppercase"
-            >
-              democratize.me
-              <VisuallyHidden>Página inicial</VisuallyHidden>
-            </Text>
-          </Box>
-        </NextLink>
+          </Flex>
+          <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
+            <NoSSR>
+              <ChakraNextLink href="/">
+                <Box cursor="pointer">
+                  <Logo
+                    color={useColorModeValue('gray.700', 'white')}
+                    h="32px"
+                  />
+                </Box>
+              </ChakraNextLink>
+            </NoSSR>
 
-        {/* Desktop Navigation */}
-        <HStack 
-          spacing={2} 
-          display={{ base: 'none', md: 'flex' }}
-        >
-          <NavLink href="/">Home</NavLink>
-          <NavLink href="/dashboard">Dashboard</NavLink>
-          <NavLink href="/monitor">Monitor</NavLink>
-          <NavLink href="/forum">Fórum</NavLink>
-          <NavLink href="/education">Educação</NavLink>
-          <NavLink href="/ranking">Ranking</NavLink>
-          
-          {/* Botão de notificações */}
-          <Box ml={3}>
-            <NotificationCenter />
-          </Box>
-          
-          <Button
-            onClick={toggleColorMode}
-            aria-label={colorMode === 'light' ? 'Ativar modo escuro' : 'Ativar modo claro'}
-            variant="ghost"
-            color={colorMode === 'dark' ? 'cyberpunk.accent' : 'gray.600'}
-            _hover={{
-              bg: buttonHoverBg
-            }}
-            _focus={{
-              boxShadow: 'none',
-              outline: 'none'
-            }}
-            size="sm"
-            minW="auto"
-            p={2}
-            ml={2}
+            <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
+              <DesktopNav />
+            </Flex>
+          </Flex>
+
+          <Stack
+            flex={{ base: 1, md: 0 }}
+            justify={'flex-end'}
+            direction={'row'}
+            spacing={6}
+            align="center"
           >
-            {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
-          </Button>
-        </HStack>
-        
-        {/* Mobile Navigation Button */}
-        <Flex display={{ base: 'flex', md: 'none' }} align="center">
-          <Box mr={2}>
-            <NotificationCenter />
-          </Box>
-          <IconButton
-            onClick={isOpen ? onClose : onOpen}
-            aria-label="Abrir menu"
-            icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
-            variant="ghost"
-            color={colorMode === 'dark' ? 'cyberpunk.accent' : 'gray.600'}
-            _hover={{
-              bg: buttonHoverBg
-            }}
-          />
+            <IconButton
+              aria-label="Alternar modo escuro"
+              icon={isDark ? <SunIcon /> : <MoonIcon />}
+              onClick={toggleColorMode}
+              variant="ghost"
+              color={useColorModeValue('gray.600', 'gray.400')}
+              _hover={{
+                bg: useColorModeValue('gray.100', 'gray.700')
+              }}
+            />
+            
+            <Box position="relative">
+              <NoSSR>
+                <IconButton
+                  aria-label="Notificações"
+                  icon={<BellIcon />}
+                  variant="ghost"
+                  color={useColorModeValue('gray.600', 'gray.400')}
+                  _hover={{
+                    bg: useColorModeValue('gray.100', 'gray.700')
+                  }}
+                  onClick={() => {
+                    // Navegar para a página de notificações
+                    window.location.href = '/notifications';
+                  }}
+                />
+              </NoSSR>
+              
+              {unreadCount > 0 && (
+                <Badge
+                  position="absolute"
+                  top="-5px"
+                  right="-5px"
+                  colorScheme="red"
+                  borderRadius="full"
+                  fontSize="xs"
+                  zIndex={1}
+                >
+                  {unreadCount}
+                </Badge>
+              )}
+            </Box>
+            
+            <Menu>
+              <MenuButton
+                as={Button}
+                rounded={'full'}
+                variant={'link'}
+                cursor={'pointer'}
+                minW={0}
+              >
+                <Avatar
+                  size={'sm'}
+                  src={'https://randomuser.me/api/portraits/lego/1.jpg'}
+                />
+              </MenuButton>
+              <MenuList>
+                <NoSSR>
+                  <MenuItem onClick={() => window.location.href = '/profile'}>
+                    Meu Perfil
+                  </MenuItem>
+                  <MenuItem onClick={() => window.location.href = '/settings'}>
+                    Configurações
+                  </MenuItem>
+                </NoSSR>
+                <MenuDivider />
+                <MenuItem>Sair</MenuItem>
+              </MenuList>
+            </Menu>
+          </Stack>
         </Flex>
-      </Flex>
-      
-      {/* Mobile Navigation Menu */}
-      {isOpen && (
-        <Box 
-          pb={4} 
-          display={{ md: 'none' }}
-          borderTop="1px"
-          borderColor={borderColor}
-        >
-          <VStack as="nav" spacing={2} align="stretch" pt={2}>
-            <NavLink href="/">Home</NavLink>
-            <NavLink href="/dashboard">Dashboard</NavLink>
-            <NavLink href="/monitor">Monitor</NavLink>
-            <NavLink href="/forum">Fórum</NavLink>
-            <NavLink href="/education">Educação</NavLink>
-            <NavLink href="/ranking">Ranking</NavLink>
-          </VStack>
-        </Box>
-      )}
+
+        <Collapse in={isOpen} animateOpacity>
+          <MobileNav />
+        </Collapse>
+      </Container>
     </Box>
   );
 }
+
+const DesktopNav = () => {
+  const linkColor = useColorModeValue('gray.600', 'gray.200');
+  const linkHoverColor = useColorModeValue('gray.800', 'white');
+  const popoverContentBgColor = useColorModeValue('white', 'gray.800');
+
+  return (
+    <Stack direction={'row'} spacing={4}>
+      {NAV_ITEMS.map((navItem) => (
+        <Box key={navItem.label}>
+          <Popover trigger={'hover'} placement={'bottom-start'}>
+            <PopoverTrigger>
+              <Box>
+                <NoSSR>
+                  {navItem.href ? (
+                    <Link
+                      p={2}
+                      fontSize={'sm'}
+                      fontWeight={500}
+                      color={linkColor}
+                      _hover={{
+                        textDecoration: 'none',
+                        color: linkHoverColor,
+                      }}
+                      onClick={() => window.location.href = navItem.href}
+                    >
+                      {navItem.label}
+                    </Link>
+                  ) : (
+                    <Link
+                      p={2}
+                      fontSize={'sm'}
+                      fontWeight={500}
+                      color={linkColor}
+                      _hover={{
+                        textDecoration: 'none',
+                        color: linkHoverColor,
+                      }}
+                    >
+                      {navItem.label}
+                    </Link>
+                  )}
+                </NoSSR>
+              </Box>
+            </PopoverTrigger>
+
+            {navItem.children && (
+              <PopoverContent
+                border={0}
+                boxShadow={'xl'}
+                bg={popoverContentBgColor}
+                p={4}
+                rounded={'xl'}
+                minW={'sm'}
+              >
+                <Stack>
+                  {navItem.children.map((child) => (
+                    <DesktopSubNav key={child.label} {...child} />
+                  ))}
+                </Stack>
+              </PopoverContent>
+            )}
+          </Popover>
+        </Box>
+      ))}
+    </Stack>
+  );
+};
+
+const DesktopSubNav = ({ label, href, subLabel }: NavItem) => {
+  return (
+    <NoSSR>
+      <Link
+        role={'group'}
+        display={'block'}
+        p={2}
+        rounded={'md'}
+        _hover={{ bg: useColorModeValue('pink.50', 'gray.900') }}
+        onClick={() => href && (window.location.href = href)}
+      >
+        <Stack direction={'row'} align={'center'}>
+          <Box>
+            <Text
+              transition={'all .3s ease'}
+              _groupHover={{ color: 'pink.400' }}
+              fontWeight={500}
+            >
+              {label}
+            </Text>
+            <Text fontSize={'sm'}>{subLabel}</Text>
+          </Box>
+          <Flex
+            transition={'all .3s ease'}
+            transform={'translateX(-10px)'}
+            opacity={0}
+            _groupHover={{ opacity: '100%', transform: 'translateX(0)' }}
+            justify={'flex-end'}
+            align={'center'}
+            flex={1}
+          >
+            <Icon color={'pink.400'} w={5} h={5} as={ChevronRightIcon} />
+          </Flex>
+        </Stack>
+      </Link>
+    </NoSSR>
+  );
+};
+
+const MobileNav = () => {
+  return (
+    <Stack
+      bg={useColorModeValue('white', 'gray.800')}
+      p={4}
+      display={{ md: 'none' }}
+    >
+      {NAV_ITEMS.map((navItem) => (
+        <MobileNavItem key={navItem.label} {...navItem} />
+      ))}
+    </Stack>
+  );
+};
+
+const MobileNavItem = ({ label, children, href }: NavItem) => {
+  const { isOpen, onToggle } = useDisclosure();
+
+  return (
+    <Stack spacing={4} onClick={children && onToggle}>
+      <Flex
+        py={2}
+        justify={'space-between'}
+        align={'center'}
+        _hover={{
+          textDecoration: 'none',
+        }}
+      >
+        <NoSSR>
+          {href ? (
+            <Link
+              fontWeight={600}
+              color={useColorModeValue('gray.600', 'gray.200')}
+              onClick={() => window.location.href = href}
+            >
+              {label}
+            </Link>
+          ) : (
+            <Text
+              fontWeight={600}
+              color={useColorModeValue('gray.600', 'gray.200')}
+            >
+              {label}
+            </Text>
+          )}
+        </NoSSR>
+        {children && (
+          <Icon
+            as={ChevronDownIcon}
+            transition={'all .25s ease-in-out'}
+            transform={isOpen ? 'rotate(180deg)' : ''}
+            w={6}
+            h={6}
+          />
+        )}
+      </Flex>
+
+      <Collapse in={isOpen} animateOpacity style={{ marginTop: '0!important' }}>
+        <Stack
+          mt={2}
+          pl={4}
+          borderLeft={1}
+          borderStyle={'solid'}
+          borderColor={useColorModeValue('gray.200', 'gray.700')}
+          align={'start'}
+        >
+          {children &&
+            children.map((child) => (
+              <NoSSR key={child.label}>
+                <Link
+                  py={2}
+                  onClick={() => child.href && (window.location.href = child.href)}
+                >
+                  {child.label}
+                </Link>
+              </NoSSR>
+            ))}
+        </Stack>
+      </Collapse>
+    </Stack>
+  );
+};
+
+interface NavItem {
+  label: string;
+  subLabel?: string;
+  children?: Array<NavItem>;
+  href?: string;
+}
+
+const NAV_ITEMS: Array<NavItem> = [
+  {
+    label: 'Políticos',
+    children: [
+      {
+        label: 'Deputados Federais',
+        subLabel: 'Acompanhe a atuação dos deputados',
+        href: '/politicians/deputies',
+      },
+      {
+        label: 'Senadores',
+        subLabel: 'Acompanhe a atuação dos senadores',
+        href: '/politicians/senators',
+      },
+      {
+        label: 'Ranking de Transparência',
+        subLabel: 'Veja quem são os políticos mais transparentes',
+        href: '/politicians/ranking',
+      },
+    ],
+  },
+  {
+    label: 'Monitor Legislativo',
+    children: [
+      {
+        label: 'Projetos de Lei',
+        subLabel: 'Acompanhe os projetos em tramitação',
+        href: '/monitor/bills',
+      },
+      {
+        label: 'Votações Recentes',
+        subLabel: 'Veja como os parlamentares votaram',
+        href: '/monitor/votings',
+      },
+      {
+        label: 'Calendário Legislativo',
+        subLabel: 'Agenda de votações e eventos',
+        href: '/monitor/calendar',
+      },
+    ],
+  },
+  {
+    label: 'Fórum',
+    href: '/forum',
+  },
+  {
+    label: 'Educação Cidadã',
+    children: [
+      {
+        label: 'Glossário Político',
+        subLabel: 'Entenda os termos da política',
+        href: '/education/glossary',
+      },
+      {
+        label: 'Guias Legislativos',
+        subLabel: 'Como funciona o processo legislativo',
+        href: '/education/guides',
+      },
+      {
+        label: 'Quiz da Democracia',
+        subLabel: 'Teste seus conhecimentos',
+        href: '/education/quiz',
+      },
+    ],
+  },
+];

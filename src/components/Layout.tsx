@@ -1,14 +1,13 @@
-import { Box } from '@chakra-ui/react'
-import Head from 'next/head'
-import { Navbar } from './Navbar'
-import { Footer } from "./Footer"
-import { useNotifications } from '../contexts/NotificationContext';
-import { NotificationCenter } from './notifications/NotificationCenter';
+import Head from 'next/head';
+import { Box } from '@chakra-ui/react';
+import { Navbar } from './Navbar';
+import { Footer } from './Footer';
+import { ReactNode } from 'react';
 
 interface LayoutProps {
-  children: React.ReactNode
-  title?: string
-  description?: string
+  children: ReactNode;
+  title?: string;
+  description?: string;
 }
 
 export function Layout({ 
@@ -32,5 +31,5 @@ export function Layout({
         <Footer />
       </Box>
     </>
-  )
+  );
 }

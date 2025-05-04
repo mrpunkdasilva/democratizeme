@@ -16,13 +16,15 @@ import {
   VStack,
   HStack,
   Icon,
-  Divider
+  Divider,
+  Button
 } from '@chakra-ui/react'
 import { FaSearch, FaBook, FaBalanceScale, FaUniversity, FaQuestion } from 'react-icons/fa'
 import { Layout } from '../../components/Layout'
 import { GlossarySection } from '../../components/education/GlossarySection'
 import { LegislativeGuides } from '../../components/education/LegislativeGuides'
 import { DemocracyQuiz } from '../../components/education/DemocracyQuiz'
+import NextLink from 'next/link'
 
 export default function Education() {
   const [searchTerm, setSearchTerm] = useState('')
@@ -105,6 +107,17 @@ export default function Education() {
                 <LegislativeGuides searchTerm={searchTerm} />
               </TabPanel>
               <TabPanel>
+                <Box mb={6}>
+                  <Button 
+                    as={NextLink} 
+                    href="/education/quiz"
+                    colorScheme="primary" 
+                    leftIcon={<Icon as={FaQuestion} />}
+                    size="md"
+                  >
+                    Acessar Quiz Democrático
+                  </Button>
+                </Box>
                 <DemocracyQuiz />
               </TabPanel>
             </TabPanels>
