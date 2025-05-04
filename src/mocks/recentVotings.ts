@@ -105,5 +105,58 @@ export const recentVotings: RecentVoting[] = [
     votesInFavor: 245,
     votesAgainst: 198,
     abstentions: 67
+  },
+  {
+    id: 4,
+    title: 'PL 456/2023 - Proteção de Dados Pessoais',
+    description: 'Regulamenta o uso e proteção de dados pessoais por empresas e órgãos públicos.',
+    date: '2023-07-28T09:15:00',
+    house: 'Câmara dos Deputados',
+    author: 'Dep. Marina Santos',
+    status: 'aprovado',
+    votesInFavor: 289,
+    votesAgainst: 112,
+    abstentions: 31,
+    keyVoters: [
+      {
+        name: 'Marina Santos',
+        avatar: 'https://randomuser.me/api/portraits/women/33.jpg',
+        vote: 'favor'
+      },
+      {
+        name: 'Paulo Mendes',
+        avatar: 'https://randomuser.me/api/portraits/men/41.jpg',
+        vote: 'favor'
+      },
+      {
+        name: 'Carla Ferreira',
+        avatar: 'https://randomuser.me/api/portraits/women/17.jpg',
+        vote: 'contra'
+      }
+    ]
+  },
+  {
+    id: 5,
+    title: 'PL 321/2023 - Incentivos à Energia Renovável',
+    description: 'Estabelece incentivos fiscais para empresas que investem em energia renovável.',
+    date: '2023-07-20T13:45:00',
+    house: 'Senado Federal',
+    author: 'Sen. Ricardo Almeida',
+    status: 'adiado',
+    votesInFavor: 38,
+    votesAgainst: 32,
+    abstentions: 11,
+    keyVoters: [
+      {
+        name: 'Ricardo Almeida',
+        avatar: 'https://randomuser.me/api/portraits/men/55.jpg',
+        vote: 'favor'
+      },
+      {
+        name: 'Luciana Costa',
+        avatar: 'https://randomuser.me/api/portraits/women/63.jpg',
+        vote: 'favor'
+      }
+    ]
   }
 ];

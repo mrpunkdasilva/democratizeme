@@ -17,6 +17,7 @@ import { keyframes } from '@emotion/react'
 import { HamburgerIcon, CloseIcon, MoonIcon, SunIcon } from '@chakra-ui/icons'
 import NextLink from 'next/link'
 import { useRouter } from 'next/router'
+import { NotificationCenter } from './notifications/NotificationCenter'
 
 // Keyframes para o efeito de brilho cyberpunk
 const glowPulse = keyframes`
@@ -136,7 +137,7 @@ export function Navbar() {
 
         {/* Desktop Navigation */}
         <HStack 
-          spacing={1} 
+          spacing={2} 
           display={{ base: 'none', md: 'flex' }}
         >
           <NavLink href="/">Home</NavLink>
@@ -145,6 +146,11 @@ export function Navbar() {
           <NavLink href="/forum">Fórum</NavLink>
           <NavLink href="/education">Educação</NavLink>
           <NavLink href="/ranking">Ranking</NavLink>
+          
+          {/* Botão de notificações */}
+          <Box ml={3}>
+            <NotificationCenter />
+          </Box>
           
           <Button
             onClick={toggleColorMode}
@@ -168,17 +174,21 @@ export function Navbar() {
         </HStack>
         
         {/* Mobile Navigation Button */}
-        <IconButton
-          display={{ base: 'flex', md: 'none' }}
-          onClick={isOpen ? onClose : onOpen}
-          aria-label="Abrir menu"
-          icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
-          variant="ghost"
-          color={colorMode === 'dark' ? 'cyberpunk.accent' : 'gray.600'}
-          _hover={{
-            bg: buttonHoverBg
-          }}
-        />
+        <Flex display={{ base: 'flex', md: 'none' }} align="center">
+          <Box mr={2}>
+            <NotificationCenter />
+          </Box>
+          <IconButton
+            onClick={isOpen ? onClose : onOpen}
+            aria-label="Abrir menu"
+            icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
+            variant="ghost"
+            color={colorMode === 'dark' ? 'cyberpunk.accent' : 'gray.600'}
+            _hover={{
+              bg: buttonHoverBg
+            }}
+          />
+        </Flex>
       </Flex>
       
       {/* Mobile Navigation Menu */}

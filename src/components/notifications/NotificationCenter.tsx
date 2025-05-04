@@ -41,6 +41,7 @@ export const NotificationCenter: React.FC = () => {
   const hoverBg = useColorModeValue('gray.50', 'gray.700');
   const textColor = useColorModeValue('gray.800', 'white');
   const mutedColor = useColorModeValue('gray.600', 'gray.400');
+  const buttonColor = useColorModeValue('gray.600', 'cyberpunk.accent');
   
   const handleOpen = () => {
     setIsOpen(true);
@@ -116,6 +117,7 @@ export const NotificationCenter: React.FC = () => {
       onClose={handleClose}
       placement="bottom-end"
       closeOnBlur={true}
+      gutter={12} // Aumenta o espaçamento entre o trigger e o popover
     >
       <PopoverTrigger>
         <Box position="relative" display="inline-block">
@@ -124,6 +126,10 @@ export const NotificationCenter: React.FC = () => {
             icon={<Icon as={FaBell} />}
             variant="ghost"
             size="md"
+            color={buttonColor}
+            _hover={{
+              bg: useColorModeValue('gray.100', 'rgba(0, 255, 255, 0.1)')
+            }}
           />
           {unreadCount > 0 && (
             <Badge
@@ -151,14 +157,24 @@ export const NotificationCenter: React.FC = () => {
         borderColor={borderColor}
       >
         <PopoverArrow />
-        <PopoverCloseButton />
+        <PopoverCloseButton 
+          size="md" 
+          top="12px" 
+          right="12px" 
+          zIndex="1"
+          color={mutedColor}
+          _hover={{ 
+            bg: hoverBg,
+            color: textColor
+          }}
+        />
         
-        <PopoverHeader borderBottomWidth="1px" fontWeight="bold" py={3}>
+        <PopoverHeader borderBottomWidth="1px" fontWeight="bold" py={4} px={5}>
           <Flex justify="space-between" align="center">
-            <Text>Notificações</Text>
+            <Text fontSize="md">Notificações</Text>
             {unreadCount > 0 && (
-              <Badge colorScheme="red" borderRadius="full">
-                {unreadCount} não lidas
+              <Badge colorScheme="red" borderRadius="full" px={2} py={0.5}>
+                {unreadCount} não {unreadCount === 1 ? 'lida' : 'lidas'}
               </Badge>
             )}
           </Flex>
@@ -166,7 +182,7 @@ export const NotificationCenter: React.FC = () => {
         
         <PopoverBody p={0} overflowY="auto" maxH="350px">
           {notifications.length === 0 ? (
-            <Box p={6} textAlign="center" color={mutedColor}>
+            <Box p={8} textAlign="center" color={mutedColor}>
               <Text>Nenhuma notificação</Text>
             </Box>
           ) : (
@@ -174,14 +190,14 @@ export const NotificationCenter: React.FC = () => {
               {notifications.map((notification) => (
                 <Box
                   key={notification.id}
-                  p={3}
+                  p={4}
                   bg={notification.read ? 'transparent' : useColorModeValue('blue.50', 'rgba(66, 153, 225, 0.1)')}
                   _hover={{ bg: hoverBg }}
                   cursor={notification.link ? 'pointer' : 'default'}
                   onClick={() => handleNotificationClick(notification)}
                   transition="background 0.2s"
                 >
-                  <HStack spacing={2} mb={1} align="flex-start">
+                  <HStack spacing={3} mb={1} align="flex-start">
                     {getNotificationIcon(notification.type)}
                     <Box flex="1">
                       <Text fontWeight={notification.read ? 'normal' : 'bold'} fontSize="sm">
@@ -206,7 +222,7 @@ export const NotificationCenter: React.FC = () => {
           )}
         </PopoverBody>
         
-        <PopoverFooter borderTopWidth="1px" p={2}>
+        <PopoverFooter borderTopWidth="1px" p={3}>
           <HStack spacing={2} justify="space-between">
             <Button
               size="sm"

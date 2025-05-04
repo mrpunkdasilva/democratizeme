@@ -11,10 +11,17 @@ export type Notification = {
   createdAt: Date;
 };
 
+type AddNotificationOptions = {
+  showToast?: boolean;
+};
+
 type NotificationContextType = {
   notifications: Notification[];
   unreadCount: number;
-  addNotification: (notification: Omit<Notification, 'id' | 'read' | 'createdAt'>) => void;
+  addNotification: (
+    notification: Omit<Notification, 'id' | 'read' | 'createdAt'>, 
+    options?: AddNotificationOptions
+  ) => void;
   markAsRead: (id: string) => void;
   markAllAsRead: () => void;
   clearNotifications: () => void;
@@ -51,7 +58,10 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({ 
 
   const unreadCount = notifications.filter(n => !n.read).length;
 
-  const addNotification = (notification: Omit<Notification, 'id' | 'read' | 'createdAt'>) => {
+  const addNotification = (
+    notification: Omit<Notification, 'id' | 'read' | 'createdAt'>,
+    options: AddNotificationOptions = { showToast: false }
+  ) => {
     const newNotification: Notification = {
       ...notification,
       id: Date.now().toString(),
@@ -61,29 +71,31 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({ 
     
     setNotifications(prev => [newNotification, ...prev]);
     
-    // Mostrar toast para notificação
-    toast({
-      title: notification.title,
-      description: notification.message,
-      status: notification.type,
-      duration: 5000,
-      isClosable: true,
-      position: 'top-right'
-    });
+    // Mostrar toast para notificação apenas se explicitamente solicitado
+    if (options.showToast) {
+      toast({
+        title: notification.title,
+        description: notification.message,
+        status: notification.type,
+        duration: 5000,
+        isClosable: true,
+        position: 'top-right'
+      });
+    }
   };
 
   const markAsRead = (id: string) => {
-    setNotifications(prev => 
-      prev.map(notification => 
-        notification.id === id 
-          ? { ...notification, read: true } 
+    setNotifications(prev =>
+      prev.map(notification =>
+        notification.id === id
+          ? { ...notification, read: true }
           : notification
       )
     );
   };
 
   const markAllAsRead = () => {
-    setNotifications(prev => 
+    setNotifications(prev =>
       prev.map(notification => ({ ...notification, read: true }))
     );
   };
@@ -93,12 +105,12 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({ 
   };
 
   return (
-    <NotificationContext.Provider 
-      value={{ 
-        notifications, 
+    <NotificationContext.Provider
+      value={{
+        notifications,
         unreadCount,
-        addNotification, 
-        markAsRead, 
+        addNotification,
+        markAsRead,
         markAllAsRead,
         clearNotifications
       }}
