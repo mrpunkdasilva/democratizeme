@@ -20,13 +20,15 @@ import {
   Button,
   HStack
 } from '@chakra-ui/react'
-import { FaSearch, FaFilter, FaCalendarAlt, FaFileAlt, FaBell } from 'react-icons/fa'
+import { FaSearch, FaFilter, FaCalendarAlt, FaFileAlt, FaBell, FaVoteYea } from 'react-icons/fa'
 import { Layout } from '../../components/Layout'
 import { LawsList } from '../../components/monitor/LawsList'
 import { VotingCalendar } from '../../components/monitor/VotingCalendar'
 import { LawsStats } from '../../components/monitor/LawsStats'
 import { useNotifications } from '../../contexts/NotificationContext'
 import { RecentVotings } from '../../components/monitor/RecentVotings'
+import { NoSSR } from '../../components/NoSSR'
+import { ChakraNextLink } from '../../components/ChakraNextLink'
 
 export default function MonitorPage() {
   const [searchTerm, setSearchTerm] = useState('')
@@ -128,6 +130,8 @@ export default function MonitorPage() {
                 size="sm"
                 variant={isDark ? "cyberpunk" : "outline"}
                 colorScheme="primary"
+                as={ChakraNextLink}
+                href="/monitor/bills"
               >
                 Projetos em Tramitação
               </Button>
@@ -136,8 +140,20 @@ export default function MonitorPage() {
                 size="sm"
                 variant={isDark ? "cyberpunk" : "outline"}
                 colorScheme="primary"
+                as={ChakraNextLink}
+                href="/monitor/calendar"
               >
                 Calendário de Votações
+              </Button>
+              <Button 
+                leftIcon={<Icon as={FaVoteYea} />} 
+                size="sm"
+                variant={isDark ? "cyberpunk" : "outline"}
+                colorScheme="primary"
+                as={ChakraNextLink}
+                href="/monitor/votings"
+              >
+                Votações Recentes
               </Button>
               <Button 
                 leftIcon={<Icon as={FaBell} />}
@@ -158,38 +174,40 @@ export default function MonitorPage() {
             </HStack>
           </Flex>
           
-          <SimpleGrid columns={{ base: 1, md: 3 }} spacing={6} mb={8}>
-            <LawsStats />
-          </SimpleGrid>
-          
-          <Tabs 
-            variant="enclosed" 
-            colorScheme="primary" 
-            bg={cardBg} 
-            borderRadius="lg" 
-            boxShadow="sm"
-            borderWidth="1px"
-            borderColor={borderColor}
-            overflow="hidden"
-          >
-            <TabList>
-              <Tab>Projetos de Lei</Tab>
-              <Tab>Calendário de Votações</Tab>
-              <Tab>Votações Recentes</Tab>
-            </TabList>
+          <NoSSR>
+            <SimpleGrid columns={{ base: 1, md: 3 }} spacing={6} mb={8}>
+              <LawsStats />
+            </SimpleGrid>
             
-            <TabPanels>
-              <TabPanel>
-                <LawsList searchTerm={searchTerm} filterType={filterType} />
-              </TabPanel>
-              <TabPanel>
-                <VotingCalendar />
-              </TabPanel>
-              <TabPanel>
-                <RecentVotings />
-              </TabPanel>
-            </TabPanels>
-          </Tabs>
+            <Tabs 
+              variant="enclosed" 
+              colorScheme="primary" 
+              bg={cardBg} 
+              borderRadius="lg" 
+              boxShadow="sm"
+              borderWidth="1px"
+              borderColor={borderColor}
+              overflow="hidden"
+            >
+              <TabList>
+                <Tab>Projetos de Lei</Tab>
+                <Tab>Calendário de Votações</Tab>
+                <Tab>Votações Recentes</Tab>
+              </TabList>
+              
+              <TabPanels>
+                <TabPanel>
+                  <LawsList searchTerm={searchTerm} filterType={filterType} />
+                </TabPanel>
+                <TabPanel>
+                  <VotingCalendar />
+                </TabPanel>
+                <TabPanel>
+                  <RecentVotings />
+                </TabPanel>
+              </TabPanels>
+            </Tabs>
+          </NoSSR>
         </Container>
       </Box>
     </Layout>

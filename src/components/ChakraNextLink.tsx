@@ -5,10 +5,12 @@ import { forwardRef } from 'react';
 export type ChakraNextLinkProps = ChakraLinkProps & {
   href: string;
   isExternal?: boolean;
+  // Adicionamos passHref como opcional para compatibilidade, mas não o usamos
+  passHref?: boolean;
 };
 
 export const ChakraNextLink = forwardRef<HTMLAnchorElement, ChakraNextLinkProps>(
-  ({ href, isExternal = false, children, ...props }, ref) => {
+  ({ href, isExternal = false, children, passHref, ...props }, ref) => {
     if (isExternal) {
       return (
         <ChakraLink href={href} isExternal ref={ref} {...props}>

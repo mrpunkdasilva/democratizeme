@@ -221,7 +221,7 @@ export function NotificationCenter() {
                     </Text>
                     
                     {notification.link && (
-                      <ChakraNextLink href={notification.link} passHref>
+                      <ChakraNextLink href={notification.link}>
                         <Button
                           as="a"
                           size="xs"
@@ -248,7 +248,7 @@ export function NotificationCenter() {
             borderColor={borderColor}
             p={3}
           >
-            <ChakraNextLink href="/notifications" passHref>
+            <ChakraNextLink href="/notifications"  passHref>
               <Button
                 as="a"
                 size="sm"
