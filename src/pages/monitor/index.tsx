@@ -26,6 +26,7 @@ import { LawsList } from '../../components/monitor/LawsList'
 import { VotingCalendar } from '../../components/monitor/VotingCalendar'
 import { LawsStats } from '../../components/monitor/LawsStats'
 import { useNotifications } from '../../contexts/NotificationContext'
+import { RecentVotings } from '../../components/monitor/RecentVotings'
 
 export default function MonitorPage() {
   const [searchTerm, setSearchTerm] = useState('')
@@ -185,7 +186,7 @@ export default function MonitorPage() {
                 <VotingCalendar />
               </TabPanel>
               <TabPanel>
-                <Text>Conteúdo de votações recentes será implementado em breve.</Text>
+                <RecentVotings />
               </TabPanel>
             </TabPanels>
           </Tabs>
