@@ -1,6 +1,7 @@
 import { ChakraProvider } from '@chakra-ui/react'
 import { useEffect, useState } from 'react'
 import theme from '../styles/theme'
+import { NotificationProvider } from '../contexts/NotificationContext'
 
 function MyApp({ Component, pageProps }) {
   // Evitar problemas de hidratação com renderização condicional
@@ -12,7 +13,9 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <ChakraProvider theme={theme}>
-      {mounted && <Component {...pageProps} />}
+      <NotificationProvider>
+        {mounted && <Component {...pageProps} />}
+      </NotificationProvider>
     </ChakraProvider>
   )
 }

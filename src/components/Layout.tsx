@@ -2,6 +2,8 @@ import { Box } from '@chakra-ui/react'
 import Head from 'next/head'
 import { Navbar } from './Navbar'
 import { Footer } from "./Footer"
+import { useNotifications } from '../contexts/NotificationContext';
+import { NotificationCenter } from './notifications/NotificationCenter';
 
 interface LayoutProps {
   children: React.ReactNode

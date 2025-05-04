@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { 
   Box, 
   Container, 
@@ -20,11 +20,12 @@ import {
   Button,
   HStack
 } from '@chakra-ui/react'
-import { FaSearch, FaFilter, FaCalendarAlt, FaFileAlt } from 'react-icons/fa'
+import { FaSearch, FaFilter, FaCalendarAlt, FaFileAlt, FaBell } from 'react-icons/fa'
 import { Layout } from '../../components/Layout'
 import { LawsList } from '../../components/monitor/LawsList'
 import { VotingCalendar } from '../../components/monitor/VotingCalendar'
 import { LawsStats } from '../../components/monitor/LawsStats'
+import { useNotifications } from '../../contexts/NotificationContext'
 
 export default function MonitorPage() {
   const [searchTerm, setSearchTerm] = useState('')
@@ -38,6 +39,22 @@ export default function MonitorPage() {
   const accentColor = useColorModeValue('primary.500', 'cyberpunk.accent')
   const isDark = useColorModeValue(false, true)
   
+  const { addNotification } = useNotifications();
+
+  useEffect(() => {
+    // Simular recebimento de notificação após 5 segundos
+    const timer = setTimeout(() => {
+      addNotification({
+        title: 'Votação em andamento',
+        message: 'PL 123/2023 - Reforma Tributária está sendo votado agora',
+        type: 'warning',
+        link: '/monitor'
+      });
+    }, 5000);
+    
+    return () => clearTimeout(timer);
+  }, [addNotification]);
+
   return (
     <Layout>
       <Box bg={bgColor} minH="calc(100vh - 64px)" py={8}>
@@ -120,6 +137,22 @@ export default function MonitorPage() {
                 colorScheme="primary"
               >
                 Calendário de Votações
+              </Button>
+              <Button 
+                leftIcon={<Icon as={FaBell} />}
+                colorScheme="blue"
+                onClick={() => {
+                  addNotification({
+                    title: 'Nova votação agendada',
+                    message: 'PL 456/2023 - Reforma Educacional será votado amanhã às 14h',
+                    type: 'info',
+                    link: '/monitor'
+                  });
+                }}
+                size="sm"
+                ml={2}
+              >
+                Testar Notificação
               </Button>
             </HStack>
           </Flex>
