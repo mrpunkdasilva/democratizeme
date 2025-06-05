@@ -165,4 +165,30 @@ export default function NotificationDetailPage() {
                       variant="subtle" 
                       borderRadius="md"
                     >
-                      <AlertIcon
+                      <AlertIcon />
+                      <Text>
+                        <ChakraNextLink href={notification.link} color={accentColor}>
+                          Ver mais detalhes
+                        </ChakraNextLink>
+                      </Text>
+                    </Alert>
+                  )}
+                </CardBody>
+                
+                <CardFooter pt={0}>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => router.push('/notifications')}
+                  >
+                    Ver todas as notificações
+                  </Button>
+                </CardFooter>
+              </Card>
+            )}
+          </Container>
+        </Box>
+      </NoSSR>
+    </Layout>
+  );
+}
