@@ -1,0 +1,116 @@
+name: Dependency Updates
+
+on:
+  schedule:
+    # Run every Monday at 9 AM UTC
+    - cron: '0 9 * * 1'
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  update-dependencies:
+    name: Update Dependencies
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: Update dependencies
+      run: |
+        npx npm-check-updates -u
+        npm install
+        
+    - name: Run tests to ensure updates work
+      run: |
+        npm run build
+        npm run lint || true
+        
+    - name: Create Pull Request
+      uses: peter-evans/create-pull-request@v5
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        commit-message: 'chore: update dependencies'
+        title: '🔄 Automated Dependency Updates'
+        body: |
+          ## 🔄 Automated Dependency Updates
+          
+          This PR contains automated dependency updates.
+          
+          ### Changes:
+          - Updated all dependencies to their latest versions
+          - Ensured the project still builds successfully
+          - Ran linting checks
+          
+          ### Next Steps:
+          - [ ] Review the changes
+          - [ ] Test the application manually
+          - [ ] Merge if everything looks good
+          
+          ---
+          *This PR was created automatically by GitHub Actions*
+        branch: dependency-updates
+        delete-branch: true
+        
+  security-updates:
+    name: Security Updates
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: Fix security vulnerabilities
+      run: |
+        npm audit fix --force || true
+        
+    - name: Test after security fixes
+      run: |
+        npm run build
+        npm run lint || true
+        
+    - name: Create Security Fix PR
+      uses: peter-evans/create-pull-request@v5
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        commit-message: 'security: fix vulnerabilities'
+        title: '🔒 Security Vulnerability Fixes'
+        body: |
+          ## 🔒 Security Vulnerability Fixes
+          
+          This PR contains automated security fixes for known vulnerabilities.
+          
+          ### Changes:
+          - Applied `npm audit fix` to resolve security issues
+          - Tested that the application still builds
+          
+          ### ⚠️ Important:
+          Please review these changes carefully as they may include breaking changes.
+          
+          ---
+          *This PR was created automatically by GitHub Actions*
+        branch: security-updates
+        delete-branch: true
+        labels: security
+

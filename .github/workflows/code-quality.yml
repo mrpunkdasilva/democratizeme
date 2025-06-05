@@ -1,0 +1,163 @@
+name: Code Quality
+
+on:
+  pull_request:
+    branches: [ main, develop ]
+  schedule:
+    # Run every day at 2 AM UTC
+    - cron: '0 2 * * *'
+
+env:
+  NODE_VERSION: '18'
+
+jobs:
+  # Advanced linting and formatting
+  advanced-lint:
+    name: Advanced Code Analysis
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+        
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: Run ESLint with detailed report
+      run: |
+        npx eslint . --ext .ts,.tsx,.js,.jsx --format json --output-file eslint-report.json || true
+        npx eslint . --ext .ts,.tsx,.js,.jsx
+        
+    - name: Upload ESLint report
+      uses: actions/upload-artifact@v4
+      with:
+        name: eslint-report
+        path: eslint-report.json
+        
+    - name: Annotate code with ESLint results
+      uses: ataylorme/eslint-annotate-action@v2
+      if: failure()
+      with:
+        repo-token: "${{ secrets.GITHUB_TOKEN }}"
+        report-json: "eslint-report.json"
+
+  # Type checking and build validation
+  type-check:
+    name: TypeScript Type Check
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+        
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: Type check
+      run: npx tsc --noEmit --pretty
+      
+    - name: Check for unused exports
+      run: npx ts-unused-exports tsconfig.json --findCompletelyUnusedFiles
+      continue-on-error: true
+
+  # Bundle size analysis
+  bundle-analysis:
+    name: Bundle Size Analysis
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+        
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: Build for bundle analysis
+      run: npm run build
+      
+    - name: Analyze bundle size
+      uses: nextjs-bundle-analysis/action@v1
+      with:
+        workflow-id: 'ci-cd.yml'
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+  # Dependency scanning
+  dependency-scan:
+    name: Dependency Vulnerability Scan
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+        
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: Run Snyk to check for vulnerabilities
+      uses: snyk/actions/node@master
+      env:
+        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      with:
+        args: --severity-threshold=high
+        
+    - name: Upload Snyk report
+      uses: github/codeql-action/upload-sarif@v3
+      if: always()
+      with:
+        sarif_file: snyk.sarif
+
+  # Code coverage (when tests are added)
+  coverage:
+    name: Code Coverage
+    runs-on: ubuntu-latest
+    if: false # Enable when tests are implemented
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+        
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: Run tests with coverage
+      run: npm run test:coverage
+      
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v4
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        files: ./coverage/lcov.info
+        fail_ci_if_error: true
+

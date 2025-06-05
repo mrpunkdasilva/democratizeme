@@ -7,7 +7,20 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "generate-favicon": "npx svg-to-ico public/favicon.svg public/favicon.ico"
+    "lint:fix": "next lint --fix",
+    "type-check": "tsc --noEmit",
+    "test": "echo \"No tests specified yet\" && exit 0",
+    "test:watch": "echo \"No tests specified yet\" && exit 0",
+    "test:coverage": "echo \"No tests specified yet\" && exit 0",
+    "analyze": "cross-env ANALYZE=true next build",
+    "export": "next export",
+    "generate-favicon": "npx svg-to-ico public/favicon.svg public/favicon.ico",
+    "prepare": "husky install || true",
+    "pre-commit": "lint-staged",
+    "clean": "rm -rf .next out node_modules/.cache",
+    "deps:update": "npx npm-check-updates -u && npm install",
+    "security:audit": "npm audit --audit-level=moderate",
+    "security:fix": "npm audit fix"
   },
   "dependencies": {
     "@chakra-ui/icons": "^2.2.4",

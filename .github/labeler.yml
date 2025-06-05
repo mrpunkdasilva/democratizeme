@@ -1,0 +1,97 @@
+# Auto-labeling configuration for PRs
+
+# Frontend changes
+frontend:
+  - 'src/components/**/*'
+  - 'src/pages/**/*'
+  - 'src/styles/**/*'
+  - '**/*.tsx'
+  - '**/*.css'
+  - '**/*.scss'
+
+# Backend/API changes
+backend:
+  - 'src/services/**/*'
+  - 'src/data/**/*'
+  - 'src/mocks/**/*'
+  - '**/api/**/*'
+
+# Configuration changes
+config:
+  - '.github/**/*'
+  - 'package.json'
+  - 'package-lock.json'
+  - 'tsconfig.json'
+  - 'next.config.js'
+  - '.env*'
+  - '.eslintrc*'
+  - '.gitignore'
+
+# Documentation
+documentation:
+  - 'README.md'
+  - 'ISSUES.md'
+  - 'docs/**/*'
+  - '**/*.md'
+
+# Dashboard feature
+feature/dashboard:
+  - 'src/pages/dashboard/**/*'
+  - 'src/components/dashboard/**/*'
+
+# Ranking feature
+feature/ranking:
+  - 'src/pages/ranking/**/*'
+  - 'src/components/ranking/**/*'
+
+# Education feature
+feature/education:
+  - 'src/pages/education/**/*'
+  - 'src/components/education/**/*'
+
+# Monitor feature
+feature/monitor:
+  - 'src/pages/monitor/**/*'
+  - 'src/components/monitor/**/*'
+
+# Forum feature
+feature/forum:
+  - 'src/pages/forum/**/*'
+  - 'src/components/forum/**/*'
+
+# Design system
+design-system:
+  - 'src/components/common/**/*'
+  - 'src/components/Layout.tsx'
+  - 'src/components/Navbar.tsx'
+  - 'src/components/Footer.tsx'
+  - 'src/styles/**/*'
+
+# Dependencies
+dependencies:
+  - 'package.json'
+  - 'package-lock.json'
+  - 'yarn.lock'
+
+# Security
+security:
+  - '.github/workflows/security*.yml'
+  - '.github/workflows/*security*'
+
+# Performance
+performance:
+  - '.lighthouserc.json'
+  - 'next.config.js'
+
+# Tests
+tests:
+  - '**/*.test.*'
+  - '**/*.spec.*'
+  - 'tests/**/*'
+  - '__tests__/**/*'
+
+# CI/CD
+ci-cd:
+  - '.github/workflows/**/*'
+  - '.github/actions/**/*'
+

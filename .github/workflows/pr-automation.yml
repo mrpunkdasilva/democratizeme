@@ -1,0 +1,141 @@
+name: Pull Request Automation
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+  pull_request_review:
+    types: [submitted]
+
+jobs:
+  # Auto-label PRs based on files changed
+  auto-label:
+    name: Auto Label PR
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.draft == false
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Auto label based on changed files
+      uses: actions/labeler@v5
+      with:
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+        configuration-path: .github/labeler.yml
+        
+  # Size label based on lines of code changed
+  size-label:
+    name: Size Label
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.draft == false
+    
+    steps:
+    - name: Add size label
+      uses: pascalgn/size-label-action@v0.4.3
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        sizes: >
+          {
+            "0": "XS",
+            "20": "S",
+            "100": "M",
+            "500": "L",
+            "1000": "XL"
+          }
+          
+  # Require reviews for large PRs
+  review-requirements:
+    name: Review Requirements
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.draft == false
+    
+    steps:
+    - name: Check PR size and require reviews
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const pr = context.payload.pull_request;
+          const additions = pr.additions;
+          const deletions = pr.deletions;
+          const totalChanges = additions + deletions;
+          
+          if (totalChanges > 500) {
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '⚠️ This is a large PR with ' + totalChanges + ' changes. Please ensure thorough review and consider breaking it into smaller PRs for better maintainability.'
+            });
+          }
+          
+  # Welcome first-time contributors
+  welcome-contributor:
+    name: Welcome First-time Contributors
+    runs-on: ubuntu-latest
+    if: github.event.action == 'opened'
+    
+    steps:
+    - name: Welcome message
+      uses: actions/first-interaction@v1
+      with:
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+        pr-message: |
+          👋 Obrigado por contribuir com o Democratize.me!
+          
+          Este é seu primeiro pull request neste repositório. Aqui estão algumas dicas:
+          
+          - [ ] Certifique-se de que o código segue nossos padrões de qualidade
+          - [ ] Verifique se todos os testes passam
+          - [ ] Adicione testes para novas funcionalidades
+          - [ ] Atualize a documentação se necessário
+          
+          Nossa equipe revisará seu PR em breve. Obrigado por ajudar a tornar a democracia mais acessível! 🏛️
+          
+  # Check for required files in PR
+  required-checks:
+    name: Required PR Checks
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.draft == false
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Check for issue reference
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const pr = context.payload.pull_request;
+          const body = pr.body || '';
+          const title = pr.title || '';
+          
+          const hasIssueReference = /(?:close[sd]?|fix(?:e[sd])?|resolve[sd]?)\s+#\d+/i.test(body) || 
+                                   /(?:close[sd]?|fix(?:e[sd])?|resolve[sd]?)\s+#\d+/i.test(title) ||
+                                   /#\d+/.test(body) || /#\d+/.test(title);
+          
+          if (!hasIssueReference && !title.toLowerCase().includes('chore')) {
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '📋 Considere referenciar uma issue relacionada neste PR (ex: "Closes #123" ou "Fixes #456") para melhor rastreabilidade.'
+            });
+          }
+          
+  # Auto-merge when conditions are met
+  auto-merge:
+    name: Auto Merge
+    runs-on: ubuntu-latest
+    if: |
+      github.event.pull_request.draft == false &&
+      contains(github.event.pull_request.labels.*.name, 'auto-merge') &&
+      github.event.pull_request.user.login == 'dependabot[bot]'
+    
+    steps:
+    - name: Enable auto-merge
+      uses: pascalgn/merge-action@v0.15.6
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        merge_method: squash
+
